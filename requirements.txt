@@ -1,0 +1,11 @@
+# Core runtime dependencies
+numpy
+pandas
+python-dotenv
+openai
+sentence-transformers
+faiss-cpu
+polib
+qdrant-client
+streamlit
+psycopg2-binary
