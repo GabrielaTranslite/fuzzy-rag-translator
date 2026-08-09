@@ -9,3 +9,4 @@ polib
 qdrant-client
 streamlit
 psycopg2-binary
+rapidfuzz
