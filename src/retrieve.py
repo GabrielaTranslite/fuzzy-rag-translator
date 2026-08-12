@@ -26,6 +26,9 @@ def tm_retrieval(tm: list, new_source: str):
     score, record = fuzzy_retrieval(tm, new_source, top_n=1)[0]
     return score, record["source"], record["target"]
 
+def build_tm_index(tm):
+    """Helper function gerating a dictionary from a TM"""
+    return {r["id"]: r for r in tm}
 
 if __name__ == "__main__":
     main()
