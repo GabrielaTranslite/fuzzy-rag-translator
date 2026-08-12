@@ -66,7 +66,7 @@ def call_repair(messages: list, model: str, client: OpenAI) -> str:
     return response.choices[0].message.content.strip()
 
 def repair_segment(new_source, tm, target_language, prompt_version, model, client):
-    """Orchestration: retrieve -> build messages -> call LLM -> log -> return."""
+    """Orchestration: retrieve -> build messages -> call LLM -> return."""
     score, tm_source, tm_target = tm_retrieval(tm, new_source)
     messages = build_repair_messages(new_source, target_language, tm_source, tm_target, prompt_version)
     output = call_repair(messages, model, client)

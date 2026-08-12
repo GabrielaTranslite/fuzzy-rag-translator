@@ -21,7 +21,7 @@ def main() -> None:
     for score, record in results:
         print(f"{score:.1f}  {record['source']}  ->  {record['target']}")
 
-def tm_retrieval(tm: list,new_source: str, top_n: int = 1):
+def tm_retrieval(tm: list, new_source: str):
     """Search the loaded TM and return the best match fields."""
     score, record = fuzzy_retrieval(tm, new_source, top_n=1)[0]
     return score, record["source"], record["target"]
