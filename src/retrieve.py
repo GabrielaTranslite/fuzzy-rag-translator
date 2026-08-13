@@ -27,8 +27,15 @@ def tm_retrieval(tm: list, new_source: str):
     return score, record["source"], record["target"]
 
 def build_tm_index(tm):
-    """Helper function gerating a dictionary from a TM"""
+    """Helper function generating a dictionary from a TM"""
     return {r["id"]: r for r in tm}
+
+def semantic_retrieval(query, tm_index, model, client, top_k, collection_name = "tm_sources"):
+    """Retrieve the top K semantic matches from Qdrant returned as (score, record) like fuzzy_retrieval"""
+    qv = model.encode([query], normalize_embeddings = True)[0]
+    resp = client.query_points(collection_name = collection_name, query = qv.tolist(), limit = top_k, with_payload = True)
+    hits = resp.points
+    return [(h.score, tm_index[h.payload["id"]]) for h in hits]
 
 if __name__ == "__main__":
     main()
