@@ -5,10 +5,6 @@ Convert the hand-filled gold_worksheet.xlsx into eval/gold_set.jsonl.
 Run:
     python eval/build_gold_set.py
 
-Re-run it any time you edit the worksheet. It always reads the CURRENT file,
-so you can keep improving your reference translations and just rebuild - nothing
-is frozen. Save/close the xlsx in Excel first so your latest edits are on disk.
-
 What it does:
   1. Reads the three sheets (fuzzy_real, edited, invented), skipping the header
      row and row 2 (the illustrative EXAMPLE).

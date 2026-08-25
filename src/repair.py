@@ -40,6 +40,12 @@ If the source edit changes gender, number, or person, update every dependent wor
 The output must be a complete, fluent {target_language} sentence. Never leave any part in English.
 Preserve all placeholders (for example $student_hp), tags, and formatting exactly as they appear.
 Output only the {target_language} translation, with no commentary.""",
+
+    "baseline_scratch": """"You are a professional video game translator working from English to {target_language}.
+Produce the full {target_language} translation of the NEW source.
+The output must be a complete, fluent {target_language} sentence. Never leave any part in English.
+Preserve all placeholders (for example $student_hp), tags, and formatting exactly as they appear.
+Output only the {target_language} translation, with no commentary."""
 }
 
 def build_repair_messages(new_source: str, target_language: str, tm_source: str, tm_target: str, prompt_version: str) -> list:
