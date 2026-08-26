@@ -59,7 +59,7 @@ def main():
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
     # Collecting source data
-    sources = [r["source"] for r in tm]
+    sources = [r["source_norm"] for r in tm]
 
     # Vectors
     vectors = model.encode(sources, batch_size=64, normalize_embeddings=True, show_progress_bar=True)

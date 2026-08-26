@@ -1,6 +1,7 @@
 import polib, json, hashlib
 from pathlib import Path
 from collections import Counter
+from normalization import strip_context
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1] 
 source_folder = PROJECT_ROOT / "data"
@@ -19,10 +20,13 @@ def parse_po_files_to_jsonl(source_folder: Path, target_folder: Path) -> None:
                     continue
                 # Generate a unique ID based on the source file, context, and msgid
                 rec_id = hashlib.md5(f"{po_path.stem}|{entry.msgctxt or ''}|{entry.msgid}".encode("utf-8")).hexdigest()
+                context, source_norm = strip_context(entry.msgid)
                 record = {
                     "id": rec_id,
                     "source_file": po_path.name,
                     "source": entry.msgid,
+                    "source_norm": source_norm, # normalized source
+                    "context": context,  # from the source if available
                     "target": entry.msgstr,
                     "msgctxt": entry.msgctxt,
                     "wml_context": entry.comment,

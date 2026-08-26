@@ -1,5 +1,6 @@
 import json
 from rapidfuzz import process, fuzz
+from normalization import strip_context
 
 # Importing TM as a list
 def load_translation_memory(file_path: str):
@@ -8,8 +9,9 @@ def load_translation_memory(file_path: str):
 
 def fuzzy_retrieval(translation_memory: list, retrieved_string: str, top_n: int):
     """Retrieve the top N fuzzy matches from the translation memory for a given string."""
+    _, retrieved_string = strip_context(retrieved_string)
     # Building the list of source strings to reuse it for every query
-    sources = [entry["source"] for entry in translation_memory]
+    sources = [entry["source_norm"] for entry in translation_memory]
     # Using rapidfuzz's process.extract to get the top N matches
     matches = process.extract(retrieved_string, sources, scorer=fuzz.ratio, limit=top_n)
     return [(score, translation_memory[index]) for _, score, index in matches]
@@ -32,6 +34,7 @@ def build_tm_index(tm):
 
 def semantic_retrieval(query, tm_index, model, client, top_k, collection_name = "tm_sources"):
     """Retrieve the top K semantic matches from Qdrant returned as (score, record) like fuzzy_retrieval"""
+    _, query = strip_context(query) 
     qv = model.encode([query], normalize_embeddings = True)[0]
     resp = client.query_points(collection_name = collection_name, query = qv.tolist(), limit = top_k, with_payload = True)
     hits = resp.points
