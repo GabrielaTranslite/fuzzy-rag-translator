@@ -1,5 +1,6 @@
 from openai import OpenAI
-from retrieve import tm_retrieval 
+from retrieve import tm_retrieval
+from normalization import format_context_hint
 
 PROMPTS = {
     "v1_only_different": """You are a professional video games translator that translates text from English to {target_language}.
@@ -45,17 +46,28 @@ Output only the {target_language} translation, with no commentary.""",
 Produce the full {target_language} translation of the NEW source.
 The output must be a complete, fluent {target_language} sentence. Never leave any part in English.
 Preserve all placeholders (for example $student_hp), tags, and formatting exactly as they appear.
+Output only the {target_language} translation, with no commentary.""",
+
+    "baseline_context": """You are a professional video game translator working from English to {target_language}.
+Produce the full {target_language} translation of the NEW source.
+The output must be a complete, fluent {target_language} sentence. Never leave any part in English.
+Preserve all placeholders (for example $student_hp), tags, and formatting exactly as they appear.
+If a grammatical/domain context is given, use it to choose the correct grammatical gender, number and forms of address in Polish.
 Output only the {target_language} translation, with no commentary."""
 }
 
 def build_repair_messages(new_source: str, target_language: str, tm_source: str, tm_target: str, prompt_version: str, context: str | None = None) -> list:
     """Assemble the system + user messages for the repair call."""
-    
+
     system = PROMPTS[prompt_version].format(target_language=target_language)
 
     user = f"""Reference source (English): {tm_source}
 Approved translation ({target_language}): {tm_target}
 New source (English): {new_source}"""
+
+    hint = format_context_hint(context)
+    if hint:
+        user += f"\n{hint}"
 
     return [
         {"role": "system", "content": system},

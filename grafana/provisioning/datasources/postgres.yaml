@@ -1,0 +1,20 @@
+# Grafana datasource provisioning: the monitoring Postgres.
+# Network address is fixed by docker-compose (service name 'db', port 5432).
+# Credentials come from the POSTGRES_* env passed into the grafana service.
+apiVersion: 1
+
+datasources:
+  - name: FuzzyRepairPostgres
+    uid: fuzzyrepair-pg
+    type: grafana-postgresql-datasource
+    access: proxy
+    url: db:5432
+    user: $POSTGRES_USER
+    jsonData:
+      database: $POSTGRES_DB
+      sslmode: disable
+      postgresVersion: 1600
+    secureJsonData:
+      password: $POSTGRES_PASSWORD
+    isDefault: true
+    editable: false

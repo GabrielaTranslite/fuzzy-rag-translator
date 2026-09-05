@@ -1,0 +1,369 @@
+{
+  "uid": "fuzzy-repair-monitoring",
+  "title": "Fuzzy-Repair MT Assistant - Monitoring",
+  "tags": [
+    "fuzzy-repair",
+    "llm-zoomcamp"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Total requests",
+      "description": "Inferences logged in the selected range.",
+      "type": "stat",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT count(*) AS requests FROM repair_logs WHERE $__timeFilter(ts)",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Total cost (USD)",
+      "description": "Summed OpenAI cost over the range.",
+      "type": "stat",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT COALESCE(sum(cost_usd), 0) AS cost FROM repair_logs WHERE $__timeFilter(ts)",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Fallback rate (%)",
+      "description": "Share of requests below the retrieval threshold (translated from scratch).",
+      "type": "stat",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT 100.0 * avg(CASE WHEN fell_back THEN 1 ELSE 0 END) AS pct FROM repair_logs WHERE $__timeFilter(ts)",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Requests over time",
+      "description": "Volume of inferences.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time, count(*) AS requests FROM repair_logs WHERE $__timeFilter(ts) GROUP BY 1 ORDER BY 1",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 5,
+      "title": "Cumulative cost (USD)",
+      "description": "Running total OpenAI spend.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT time, sum(c) OVER (ORDER BY time) AS cumulative_usd FROM (SELECT $__timeGroup(ts, $__interval) AS time, COALESCE(sum(cost_usd),0) AS c FROM repair_logs WHERE $__timeFilter(ts) GROUP BY 1) t ORDER BY time",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 6,
+      "title": "Avg latency (ms)",
+      "description": "Live-request latency (seed rows have no latency).",
+      "type": "timeseries",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time, avg(latency_ms) AS avg_latency_ms FROM repair_logs WHERE $__timeFilter(ts) AND latency_ms IS NOT NULL GROUP BY 1 ORDER BY 1",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 7,
+      "title": "User feedback",
+      "description": "good vs needs_fixing.",
+      "type": "piechart",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT feedback AS metric, count(*) AS value FROM repair_logs WHERE feedback IS NOT NULL AND $__timeFilter(ts) GROUP BY 1",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Retrieval score distribution",
+      "description": "Fuzzy similarity of the best match. The product repairs only above the threshold (55) and otherwise translates from scratch.",
+      "type": "barchart",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT (width_bucket(retrieval_score, 0, 100, 10) * 10)::text AS bucket, count(*) AS n FROM repair_logs WHERE retrieval_score IS NOT NULL AND $__timeFilter(ts) GROUP BY 1 ORDER BY 1",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "xField": "bucket",
+        "legend": {
+          "showLegend": false
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Preservation distribution (repair)",
+      "description": "0 = approved translation kept verbatim; higher = more rewritten.",
+      "type": "barchart",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "fuzzyrepair-pg"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT round(preservation::numeric, 1)::text AS bucket, count(*) AS n FROM repair_logs WHERE preservation IS NOT NULL AND $__timeFilter(ts) GROUP BY 1 ORDER BY 1",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "fuzzyrepair-pg"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "xField": "bucket",
+        "legend": {
+          "showLegend": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Grafana dashboard provisioning: load any dashboard JSON in this folder on boot.
+apiVersion: 1
+
+providers:
+  - name: FuzzyRepair
+    orgId: 1
+    folder: ""
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: false

@@ -36,6 +36,17 @@ def strip_context(text: str) -> tuple[str, str]:
     return "", text.strip()
 
 
+def format_context_hint(context: str) -> str:
+    """Turn a gettext context prefix into one hint line for the prompt.
+
+    Empty context yields an empty string (no line added). Shared by the
+    scratch and repair prompt builders so the wording can never drift apart.
+    """
+    if not context:
+        return ""
+    return f"Grammatical/domain context for the new source: {context}"
+
+
 def normalize_records(
     records: Iterable[dict],
     text_field: str,
