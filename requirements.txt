@@ -12,3 +12,4 @@ psycopg2-binary
 rapidfuzz
 openpyxl
 sacrebleu
+prefect==3.8.5
