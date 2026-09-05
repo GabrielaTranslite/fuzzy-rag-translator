@@ -53,6 +53,18 @@ Loaded into a DataFrame, `translation_memory.jsonl` has one row per segment with
 
 The analysis notebook adds a few extra columns on top of these, such as word-length buckets, but those exist only for exploration and are not part of the memory itself.
 
+## Run the app
+
+```
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Run it from the repo root, with a `.env` file present (see `.env.example`).
+`app.py` reads `OPENAI_API_KEY` / `OPENAI_MODEL` from `.env` and the translation
+memory from `data/tm/translation_memory.jsonl`; Postgres is optional (feedback
+falls back to `eval/app_logs.jsonl` when the database is unreachable).
+
 ## Notes
 
 - The project currently has `.po` files in `data/` and an existing `data/tm` JSONL store.

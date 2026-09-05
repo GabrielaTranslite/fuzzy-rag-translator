@@ -1,0 +1,234 @@
+case_id,category,edit_type,requires_agreement,condition,prompt_version,model,output,chrf,preservation,retrieval_score
+f01,fuzzy_real,reworded,no,scratch,baseline_scratch,gpt-4o,Piracki Okręt Flagowy,40.04116705161598,,
+f02,fuzzy_real,addition,no,scratch,baseline_scratch,gpt-4o,zaraza ($type),100.0,,
+f03,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,Kampanie i scenariusze,100.0,,
+f04,fuzzy_real,addition,no,scratch,baseline_scratch,gpt-4o,"<ref>dst='..calendar' text='Kalendarz'</ref>
+<ref>dst='..geography' text='Geografia'</ref>",100.0,,
+f05,fuzzy_real,addition,yes,scratch,baseline_scratch,gpt-4o,Harmonogram Czasu Dnia,12.020922386151394,,
+f06,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,Syreni,2.1929824561403506,,
+f07,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Obywatel Tryton,6.328299296378925,,
+f08,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,Jeździec Szkieletów,69.96025056389749,,
+f09,fuzzy_real,gender,yes,scratch,baseline_scratch,gpt-4o,Drake Arbiter,6.3195254764683,,
+f10,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Krasnoludzki Górnik,75.8991566712155,,
+f11,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Jajo Olbrzymiej Mrówki,28.923964278909057,,
+f12,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,Koń,7.246376811594203,,
+f13,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,"Jednostki <i>Żywiołowe</i> są odporne na truciznę, wyczerpanie i zarazę.",54.138655190604844,,
+f14,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,"Jednostki z cechą <i>dim</i> wymagają o 20% więcej doświadczenia, aby awansować.",76.88187566491348,,
+f15,fuzzy_real,gender,yes,scratch,baseline_scratch,gpt-4o,Czarny Koń,8.912670489097387,,
+f16,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Orkowy Okręt Wojenny,43.521205266717615,,
+f17,fuzzy_real,addition,no,scratch,baseline_scratch,gpt-4o,Przełącz wyświetlanie bieżących klatek na sekundę. Zapisuje również te wartości do pliku w katalogu userdata.,57.41853313731426,,
+f18,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,Orkowa Barka Bojowa,39.096940045353435,,
+f19,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,Kolejność i liczba uderzeń,68.2884778021721,,
+f20,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,zatruty,73.45238095238095,,
+f21,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Królowa Ognistych Mrówek,62.26873630898398,,
+f22,fuzzy_real,omission,no,scratch,baseline_scratch,gpt-4o,Włącz tryb debugowania (nie działa w trybie wieloosobowym). Zobacz <ref dst='debug_commands'>polecenia trybu debugowania</ref>.,77.99856655865348,,
+f23,fuzzy_real,addition,no,scratch,baseline_scratch,gpt-4o,"• <ref dst='ability_regenerates_8'>Regeneracja</ref>: Niektóre jednostki (takie jak trolle) będą automatycznie leczyć 8HP co turę. Jeśli jednostka jest zatruta, trucizna zostanie wyleczona zamiast tego.",72.22997623834128,,
+f24,fuzzy_real,gender,yes,scratch,baseline_scratch,gpt-4o,Drake Clasher,3.125,,
+f25,fuzzy_real,term,yes,scratch,baseline_scratch,gpt-4o,Jajo ognistego mrówka,68.49440777076661,,
+f26,fuzzy_real,gender,yes,scratch,baseline_scratch,gpt-4o,Drake Armagedonu,7.857142857142857,,
+f27,fuzzy_real,gender,yes,scratch,baseline_scratch,gpt-4o,Drake Burner,2.347417840375587,,
+f28,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,"Jednostki <i>mechaniczne</i> są odporne na truciznę, wyczerpanie i zarazę.",55.984087171027355,,
+f29,fuzzy_real,tag/formatting,no,scratch,baseline_scratch,gpt-4o,"• <b>Jednostki leczące</b>: Jednostki z umiejętnością <ref dst='ability_cures'>leczenia</ref> wyleczą Truciznę we wszystkich sąsiadujących sojuszniczych jednostkach (z preferencją do leczenia, jeśli posiadają również tę umiejętność).",55.29299180218635,,
+f30,fuzzy_real,term,no,scratch,baseline_scratch,gpt-4o,Kot,100.0,,
+e01,edited,term,yes,scratch,baseline_scratch,gpt-4o,Wodny Smok,32.07068937819306,,
+e02,edited,reworded,yes,scratch,baseline_scratch,gpt-4o,"Ta opcja bezpośrednio łączy Cię z oficjalnym serwerem gry. Znajdziesz się w lobby, gdzie możesz tworzyć swoje gry według własnego uznania, a także gdzie wiele gier jest już otwartych i być może niektórzy gracze oraz zespoły już czekają na dołączenie do nowego meczu.",56.52920124983537,,
+e03,edited,term,yes,scratch,baseline_scratch,gpt-4o,Królewski Architekt,75.8991566712155,,
+e04,edited,term,yes,scratch,baseline_scratch,gpt-4o,Łupieżca Wydm,17.228094857589806,,
+e05,edited,reworded,no,scratch,baseline_scratch,gpt-4o,Druga warta — czwarta godzina,67.8907396950875,,
+e06,edited,reworded,no,scratch,baseline_scratch,gpt-4o,"Saurianie mają bardzo drobną budowę, i choć z tego powodu są nieco delikatni, są niesamowicie zwinni. W walce ich rozmiar pozwala im przemykać obok obrony, która powstrzymałaby każdą większą istotę, co czyni ich trudnym przeciwnikiem do pokonania.
+
+Włócznie są ich ulubioną bronią, ponieważ ich potężne tylne nogi mogą napędzać włócznię z wystarczającą siłą, aby zadać znaczne obrażenia, zarówno w ręku, jak i rzuconą.",39.288027264206335,,
+e07,edited,number,yes,scratch,baseline_scratch,gpt-4o,"Mapy gry zawierają różnorodne tereny, które wpływają zarówno na ruch, jak i zdolność obronną jednostek w walce.",32.423799573479556,,
+e08,edited,gender,yes,scratch,baseline_scratch,gpt-4o,"Ostateczny cios niszczy licha, uwalniając na zewnątrz małą falę uderzeniową energii. Jej słudzy padają jak marionetki z przeciętymi sznurkami. Chmura kurzu unosi się, gdy resztki niegdyś śmiertelnego ciała licha rozpadają się po raz ostatni.",47.571329891156324,,
+e09,edited,number,yes,scratch,baseline_scratch,gpt-4o,"Idź dalej, Elfie, chyba że lubisz rozbijać obóz w tym śliskim bagnie. My, na przykład, nie!",41.77562421865391,,
+e10,edited,gender,yes,scratch,baseline_scratch,gpt-4o,"Gdy jednostka na linii frontu zostanie poważnie uszkodzona, możesz bezpiecznie przenieść ją za swoją linię obronną. Aby utrzymać linię, najprawdopodobniej będziesz musiał zastąpić ją rezerwą, więc trzymaj kilka jednostek za linią frontu. Jeśli masz uzdrowicieli, uszkodzone jednostki w drugiej linii szybko się zregenerują.",50.83070618320301,,
+e11,edited,addition,yes,scratch,baseline_scratch,gpt-4o,"Jeśli kontrolujesz jednostkę i nie poruszyła się ona w tej turze, możesz użyć jednego punktu ruchu, aby przywrócić 10% swoich punktów życia.",45.87698046455753,,
+e12,edited,addition,no,scratch,baseline_scratch,gpt-4o,O nie! Oni niszczą nasz dom! Gdzie są bogowie w tej chwili potrzeby?,68.35263272786575,,
+e13,edited,number,yes,scratch,baseline_scratch,gpt-4o,"Kliknij ten przycisk, aby przeczytać poprzednie wskazówki z ""Księgi Wesnoth"".",95.75422537576169,,
+e14,edited,term,no,scratch,baseline_scratch,gpt-4o,Ukończ stary samouczek <i>Budowy</i>.,82.29686160424721,,
+e15,edited,term,no,scratch,baseline_scratch,gpt-4o,Smoki? Planujemy używać ich jako wierzchowców.,63.38125702649502,,
+e16,edited,addition,no,scratch,baseline_scratch,gpt-4o,"Myślę... Myślę, że gdybym się trochę skoncentrował, mógłbym ci powiedzieć, gdzie to jest. Ale trudno mi się skupić pod taką presją.",62.180618703287294,,
+e17,edited,omission,no,scratch,baseline_scratch,gpt-4o,"Możesz rozkazać jednostce poruszać się przez kilka tur, wybierając jednostkę i klikając na miejsce docelowe.",42.849620170775644,,
+e18,edited,addition,no,scratch,baseline_scratch,gpt-4o,"Gdyby nie zbroja, którą noszą, niektóre smoki mogłyby być nie do odróżnienia od prawdziwych smoków, przynajmniej dla niższych ras, dla których smoki są tylko legendą. Stworzenia znane jako „Smoki Armagedonu” to ogromne istoty, zarówno odporne na, jak i obdarzone ogromnym ogniem i trucizną.",42.57966366989984,,
+e19,edited,reworded,no,scratch,baseline_scratch,gpt-4o,Czy nie możemy po prostu spróbować unikać orków?,92.61752324213394,,
+e20,edited,term,yes,scratch,baseline_scratch,gpt-4o,Elficka Czarodziejka,77.4646993300244,,
+e21,edited,term,no,scratch,baseline_scratch,gpt-4o,"Nieożywione ani przez naturalne życie, ani przez nekromancję, termin <italic>text='mechanical'</italic> opisuje stworzony artefakt inteligentnej istoty. Większość rzeczy mechanicznych ani się nie porusza, ani nie myśli samodzielnie, ale niektóre robią to dzięki cudom inżynierii.",55.05157387120896,,
+e22,edited,reworded,yes,scratch,baseline_scratch,gpt-4o,Niezła korzyść! Wszystko za zabitą istotę?,28.551269899096205,,
+e23,edited,omission,no,scratch,baseline_scratch,gpt-4o,Mistrzu Delfadorze! Nadchodzą ze wszystkich stron! Co mamy robić?,74.08669434245607,,
+e24,edited,term,yes,scratch,baseline_scratch,gpt-4o,Goblin podżegacz wojenny,53.59884393059357,,
+e25,edited,addition,no,scratch,baseline_scratch,gpt-4o,Witamy ponownie w Wesnoth!,81.2830248211033,,
+e26,edited,term,no,scratch,baseline_scratch,gpt-4o,"Strefa kontroli jednostki rozciąga się na sześć heksów bezpośrednio przylegających do jednostki, a jednostki, które wchodzą w strefę kontroli wroga, są zmuszone się zatrzymać. Jednostki z umiejętnością latania ignorują strefy kontroli wroga i mogą przez nie przelatywać swobodnie, bez konieczności zatrzymywania się. Jednostki poziomu 0 są uważane za zbyt słabe, aby generować strefę kontroli, i wszystkie jednostki mogą swobodnie poruszać się po heksach wokół jednostki wroga poziomu 0.",59.5870652520823,,
+e27,edited,reworded,yes,scratch,baseline_scratch,gpt-4o,"Pamiętaj, aby wycofać ranne jednostki do zamków i rekrutować więcej, jeśli to konieczne. Zadbaj szczególnie o jednostki z najwyższą <i>liczbą punktów doświadczenia (XP)</i>, aby przetrwały, zdobywały poziomy i stawały się potężniejsze.",44.971431928385826,,
+e28,edited,term,yes,scratch,baseline_scratch,gpt-4o,"Stary król? Słyszałem o tym, ale wiem, że to nieprawda. Moi rodzice mi powiedzieli.",68.27765339151762,,
+e29,edited,term,yes,scratch,baseline_scratch,gpt-4o,"Konradzie, zgodnie z obietnicą, oto moja sakiewka pełna klejnotów.",44.15002899354859,,
+e30,edited,number,yes,scratch,baseline_scratch,gpt-4o,Co mam zrobić dalej? Ile jeszcze rzeki muszę przepłynąć?,29.15805019159383,,
+i01,invented,,,scratch,baseline_scratch,gpt-4o,Goblin upuszcza zardzewiały klucz.,100.0,,
+i02,invented,,,scratch,baseline_scratch,gpt-4o,Liszcz podnosi jeden kościsty palec. Najwyraźniej teraz twoja kolej na cierpienie.,70.61010648035254,,
+i03,invented,,,scratch,baseline_scratch,gpt-4o,"Witamy na polu bitwy. Wybierz przeciwnika, aby zobaczyć jego umiejętności, odporności i obecne efekty statusu przed podjęciem kolejnej akcji.",50.4779769534903,,
+i04,invented,,,scratch,baseline_scratch,gpt-4o,Zmiany nie zostały zapisane. Czy chcesz zapisać swoje postępy przed powrotem do głównego menu?,70.27236549000094,,
+i05,invented,,,scratch,baseline_scratch,gpt-4o,"Most jest zniszczony. Oczywiście, królewscy inżynierowie nigdzie nie są do znalezienia.",46.0326264425649,,
+i06,invented,,,scratch,baseline_scratch,gpt-4o,"Zimny wiatr uniósł się z krypty, niosąc szepty w języku, który prawie rozumiałeś.",45.980334496398285,,
+i07,invented,,,scratch,baseline_scratch,gpt-4o,Zadaj $damage obrażeń fizycznych wszystkim wrogom w promieniu $distance metrów.,80.75744093602357,,
+i08,invented,,,scratch,baseline_scratch,gpt-4o,"Klątwa znika z $target_name, ale coś w ciemności to zauważa.",48.902943015865,,
+i09,invented,,,scratch,baseline_scratch,gpt-4o,Wybierz swoją nagrodę: <span color='gold'>$reward_a</span> lub <span color='gold'>$reward_b</span>.,95.86489268873385,,
+i10,invented,,,scratch,baseline_scratch,gpt-4o,"$player_name unosi zniszczony miecz w stronę burzowych chmur. Błyskawica uderza w ostrze, zadając <span color='red'>$damage</span> obrażeń od szoku wszystkim pobliskim wrogom - ale także przypalając im brwi.",58.686230517032556,,
+i11,invented,,,scratch,baseline_scratch,gpt-4o,"Odkrywasz zapieczętowany list pod materacem kapitana. Wosk nosi królewski herb, chociaż koperta jest podejrzanie pokryta okruchami.",66.57863942217229,,
+i12,invented,,,scratch,baseline_scratch,gpt-4o,"Wieśniacy gromadzą się wokół powalonej bestii, wiwatując, gdy jej ogromne ciało zapada się w błoto. Burmistrz wychodzi naprzód, aby ci podziękować, a następnie cicho pyta, kto zapłaci za zniszczony rynek.",53.195289277638025,,
+i13,invented,,,scratch,baseline_scratch,gpt-4o,"$unit_name próbuje rzucić Burzę Kruków, ale zaklęcie nie udaje się w deszczu. Mimo to pojawia się jeden zdezorientowany kruk, kradnie guzik od najbliższego strażnika i odlatuje.",61.00882764590707,,
+i14,invented,,,scratch,baseline_scratch,gpt-4o,"Umieściłeś trzy kryształowe fragmenty na starożytnym ołtarzu, a komnata wypełniła się złotym światłem. Przez jeden wspaniały moment uwierzyłeś, że obudziłeś legendarną broń; wtedy ołtarz wydał pojedynczego, letniego ziemniaka.",55.41937978418719,,
+i15,invented,,,scratch,baseline_scratch,gpt-4o,"Rytuał się opłaca, przywracając <span color='green'>$amount</span> HP dla $target_name. Niestety, wiąże się to z poważnymi konsekwencjami: trzy rozczarowane zjawy teraz zasiadają w sądzie, żądając, abyś rozliczył się ze swoich życiowych wyborów.",47.99533247479428,,
+f01,fuzzy_real,reworded,no,scratch_context,baseline_context,gpt-4o,Piracki Okręt Flagowy,40.04116705161598,,
+f02,fuzzy_real,addition,no,scratch_context,baseline_context,gpt-4o,zaraza ($type),100.0,,
+f03,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,Kampanie i scenariusze,100.0,,
+f04,fuzzy_real,addition,no,scratch_context,baseline_context,gpt-4o,<ref>dst='..calendar' text='Kalendarz'</ref> <ref>dst='..geography' text='Geografia'</ref>,100.0,,
+f05,fuzzy_real,addition,yes,scratch_context,baseline_context,gpt-4o,Harmonogram Czasu Dnia,12.020922386151394,,
+f06,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,Syreny,2.1929824561403506,,
+f07,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Obywatel Tryton,6.328299296378925,,
+f08,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,Jeździec Szkieletów,69.96025056389749,,
+f09,fuzzy_real,gender,yes,scratch_context,baseline_context,gpt-4o,Drakoniczna Arbiterka,18.71532997222602,,
+f10,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Krasnoludzki Górnik,75.8991566712155,,
+f11,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Jajo olbrzymiej mrówki,50.36499757776167,,
+f12,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,Klacz,100.0,,
+f13,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,"Jednostki <i>Żywiołów</i> są odporne na truciznę, wyczerpanie i zarazę.",54.30759700935628,,
+f14,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,"Jednostki z cechą <i>dim</i> wymagają o 20% więcej doświadczenia, aby awansować.",76.88187566491348,,
+f15,fuzzy_real,gender,yes,scratch_context,baseline_context,gpt-4o,Czarny Koń,8.912670489097387,,
+f16,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Orkowy Okręt Wojenny,43.521205266717615,,
+f17,fuzzy_real,addition,no,scratch_context,baseline_context,gpt-4o,Przełącz wyświetlanie bieżących klatek na sekundę. Zapisuje również te wartości do pliku w katalogu userdata.,57.41853313731426,,
+f18,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,Orkowa Barka Bojowa,39.096940045353435,,
+f19,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,Kolejność i liczba uderzeń,68.2884778021721,,
+f20,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,zatruta,100.0,,
+f21,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Królowa Ognistych Mrówek,62.26873630898398,,
+f22,fuzzy_real,omission,no,scratch_context,baseline_context,gpt-4o,Włącz tryb debugowania (nie działa w trybie wieloosobowym). Zobacz <ref dst='debug_commands'>polecenia trybu debugowania</ref>.,77.99856655865348,,
+f23,fuzzy_real,addition,no,scratch_context,baseline_context,gpt-4o,"• <ref dst='ability_regenerates_8'>Regeneracja</ref>: Niektóre jednostki (takie jak trolle) będą automatycznie leczyć 8 punktów życia co turę. Jeśli jednostka jest zatruta, trucizna zostanie wyleczona zamiast tego.",71.5952100165415,,
+f24,fuzzy_real,gender,yes,scratch_context,baseline_context,gpt-4o,Smocza Wojowniczka,74.09744667097607,,
+f25,fuzzy_real,term,yes,scratch_context,baseline_context,gpt-4o,Jajo Ognistego Mrówka,41.71831078037844,,
+f26,fuzzy_real,gender,yes,scratch_context,baseline_context,gpt-4o,Drake Armageddon,7.857142857142857,,
+f27,fuzzy_real,gender,yes,scratch_context,baseline_context,gpt-4o,Smocza Podpalaczka,67.41689959533798,,
+f28,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,"<i>Mechaniczne</i> jednostki są odporne na truciznę, wyczerpanie i zarazę.",68.22564696864013,,
+f29,fuzzy_real,tag/formatting,no,scratch_context,baseline_context,gpt-4o,"• <b>Jednostki leczące</b>: Jednostki z umiejętnością <ref dst='ability_cures'>leczenia</ref> wyleczą Truciznę we wszystkich sąsiednich sojuszniczych jednostkach (preferując to przed leczeniem, jeśli posiadają również tę umiejętność).",56.40797280840846,,
+f30,fuzzy_real,term,no,scratch_context,baseline_context,gpt-4o,Kot,100.0,,
+e01,edited,term,yes,scratch_context,baseline_context,gpt-4o,Wodny Smok,32.07068937819306,,
+e02,edited,reworded,yes,scratch_context,baseline_context,gpt-4o,"Ta opcja bezpośrednio łączy cię z oficjalnym serwerem gry. Znajdziesz się w lobby, gdzie możesz tworzyć swoje gry według własnego uznania, a także gdzie wiele gier jest już otwartych i być może niektórzy gracze oraz drużyny już czekają na dołączenie do nowego meczu.",57.80530599293253,,
+e03,edited,term,yes,scratch_context,baseline_context,gpt-4o,Królewski Architekt,75.8991566712155,,
+e04,edited,term,yes,scratch_context,baseline_context,gpt-4o,Łupieżca Wydm,17.228094857589806,,
+e05,edited,reworded,no,scratch_context,baseline_context,gpt-4o,Druga warta — czwarta godzina,67.8907396950875,,
+e06,edited,reworded,no,scratch_context,baseline_context,gpt-4o,"Saurianie mają bardzo drobną budowę, i choć z tego powodu są nieco delikatni, to jednak są niesamowicie zwinni. W walce ich rozmiar pozwala im przemykać obok obrony, która powstrzymałaby każdą większą istotę, co czyni ich trudnym przeciwnikiem do pokonania.
+
+Włócznie są ich preferowaną bronią, ponieważ ich potężne tylne nogi mogą napędzać włócznię z wystarczającą siłą, aby zadać znaczne obrażenia, zarówno w ręku, jak i rzuconą.",41.8955664513564,,
+e07,edited,number,yes,scratch_context,baseline_context,gpt-4o,"Mapy gry zawierają różnorodne tereny, które wpływają zarówno na ruch, jak i zdolność obronną jednostek w walce.",32.423799573479556,,
+e08,edited,gender,yes,scratch_context,baseline_context,gpt-4o,"Ostateczny cios niszczy licha, uwalniając na zewnątrz małą falę uderzeniową energii. Jej słudzy padają jak marionetki z przeciętymi sznurkami. Chmura kurzu unosi się, gdy resztki niegdyś śmiertelnego ciała licha rozpadają się po raz ostatni.",47.571329891156324,,
+e09,edited,number,yes,scratch_context,baseline_context,gpt-4o,"Idź dalej, Elfie, chyba że lubisz rozbijać obóz w tym śliskim bagnie. My, na przykład, nie!",41.77562421865391,,
+e10,edited,gender,yes,scratch_context,baseline_context,gpt-4o,"Gdy jednostka na linii frontu zostanie poważnie uszkodzona, możesz bezpiecznie przenieść ją za swoją linię obrony. Aby utrzymać linię, najprawdopodobniej będziesz musiał zastąpić ją rezerwą, więc trzymaj kilka jednostek za linią frontu. Jeśli masz uzdrowicieli, uszkodzone jednostki w drugiej linii szybko się zregenerują.",51.95335205766223,,
+e11,edited,addition,yes,scratch_context,baseline_context,gpt-4o,"Jeśli kontrolujesz jednostkę i nie poruszyła się ona w tej turze, możesz użyć jednego punktu ruchu, aby przywrócić 10% swoich punktów życia.",45.87698046455753,,
+e12,edited,addition,no,scratch_context,baseline_context,gpt-4o,O nie! Oni niszczą nasz dom! Gdzie są bogowie w tej chwili potrzeby?,68.35263272786575,,
+e13,edited,number,yes,scratch_context,baseline_context,gpt-4o,"Kliknij ten przycisk, aby przeczytać poprzednie wskazówki z ""Księgi Wesnoth"".",95.75422537576169,,
+e14,edited,term,no,scratch_context,baseline_context,gpt-4o,Ukończ stary samouczek <i>Budowa</i>.,85.25424406364007,,
+e15,edited,term,no,scratch_context,baseline_context,gpt-4o,Smoki? Planujemy używać ich jako wierzchowców.,63.38125702649502,,
+e16,edited,addition,no,scratch_context,baseline_context,gpt-4o,"Myślę... Myślę, że gdybym się trochę skoncentrował, mógłbym ci powiedzieć, gdzie to jest. Ale trudno mi się skupić pod takim naciskiem.",56.04950831606147,,
+e17,edited,omission,no,scratch_context,baseline_context,gpt-4o,"Możesz rozkazać jednostce poruszać się przez kilka tur, wybierając jednostkę i klikając na miejsce docelowe.",42.849620170775644,,
+e18,edited,addition,no,scratch_context,baseline_context,gpt-4o,"Gdyby nie zbroja, którą noszą, niektóre smoki mogłyby być nie do odróżnienia od prawdziwych smoków, przynajmniej dla niższych ras, dla których smoki są tylko legendą. Stworzenia znane jako „Smoki Armagedonu” to ogromne istoty, zarówno odporne na, jak i posiadające potężny ogień i truciznę.",46.77505352930821,,
+e19,edited,reworded,no,scratch_context,baseline_context,gpt-4o,Czy nie możemy po prostu spróbować unikać orków?,92.61752324213394,,
+e20,edited,term,yes,scratch_context,baseline_context,gpt-4o,Elficka Czarodziejka,77.4646993300244,,
+e21,edited,term,no,scratch_context,baseline_context,gpt-4o,"Nieożywione ani przez naturalne życie, ani przez nekromancję, termin <italic>text='mechanical'</italic> opisuje stworzony artefakt inteligentnej istoty. Większość mechanicznych rzeczy ani się nie porusza, ani nie myśli samodzielnie, ale niektóre z nich robią to dzięki cudom inżynierii.",56.262129713684374,,
+e22,edited,reworded,yes,scratch_context,baseline_context,gpt-4o,Niezła korzyść! Wszystko za zabitą istotę?,28.551269899096205,,
+e23,edited,omission,no,scratch_context,baseline_context,gpt-4o,Mistrzu Delfadorze! Nadchodzą ze wszystkich stron! Co powinniśmy zrobić?,71.82299541834195,,
+e24,edited,term,yes,scratch_context,baseline_context,gpt-4o,Goblin podżegacz wojenny,53.59884393059357,,
+e25,edited,addition,no,scratch_context,baseline_context,gpt-4o,Witamy ponownie w Wesnoth!,81.2830248211033,,
+e26,edited,term,no,scratch_context,baseline_context,gpt-4o,"Strefa kontroli jednostki rozciąga się na sześć heksów bezpośrednio przylegających do jednostki, a jednostki, które wchodzą w strefę kontroli wroga, są zmuszone się zatrzymać. Jednostki z umiejętnością latania ignorują wrogie strefy kontroli i mogą przez nie przelatywać swobodnie, bez konieczności zatrzymywania się. Jednostki poziomu 0 są uważane za zbyt słabe, aby generować strefę kontroli, i wszystkie jednostki mogą swobodnie poruszać się po heksach wokół wrogiej jednostki poziomu 0.",61.977073000664774,,
+e27,edited,reworded,yes,scratch_context,baseline_context,gpt-4o,"Pamiętaj, aby wycofać ranne jednostki do zamków i rekrutować więcej, jeśli to konieczne. Zwracaj szczególną uwagę na jednostki z najwyższą <i>liczbą punktów doświadczenia (XP)</i>, aby przetrwały, zdobywały poziomy i stawały się potężniejsze.",44.15419368820642,,
+e28,edited,term,yes,scratch_context,baseline_context,gpt-4o,"Stary król? Słyszałem o tym, ale wiem, że to nieprawda. Moi rodzice mi powiedzieli.",68.27765339151762,,
+e29,edited,term,yes,scratch_context,baseline_context,gpt-4o,"Konradzie, zgodnie z obietnicą, oto moja sakiewka pełna klejnotów.",44.15002899354859,,
+e30,edited,number,yes,scratch_context,baseline_context,gpt-4o,Co mam zrobić dalej? Ile jeszcze rzeki muszę przepłynąć?,29.15805019159383,,
+i01,invented,,,scratch_context,baseline_context,gpt-4o,Goblin upuszcza zardzewiały klucz.,100.0,,
+i02,invented,,,scratch_context,baseline_context,gpt-4o,Liszcz podnosi jeden kościsty palec. Najwyraźniej teraz twoja kolej na cierpienie.,70.61010648035254,,
+i03,invented,,,scratch_context,baseline_context,gpt-4o,"Witamy na polu bitwy. Wybierz przeciwnika, aby zobaczyć jego umiejętności, odporności i obecne efekty statusu przed podjęciem kolejnej akcji.",50.4779769534903,,
+i04,invented,,,scratch_context,baseline_context,gpt-4o,Zmiany nie zostały zapisane. Czy chcesz zapisać postęp przed powrotem do głównego menu?,73.23518513186899,,
+i05,invented,,,scratch_context,baseline_context,gpt-4o,"Most jest zniszczony. Oczywiście, królewscy inżynierowie nigdzie nie są do znalezienia.",46.0326264425649,,
+i06,invented,,,scratch_context,baseline_context,gpt-4o,"Zimny wiatr uniósł się z krypty, niosąc szepty w języku, który prawie rozumiałeś.",45.980334496398285,,
+i07,invented,,,scratch_context,baseline_context,gpt-4o,Zadaj $damage obrażeń fizycznych wszystkim wrogom w promieniu $distance metrów.,80.75744093602357,,
+i08,invented,,,scratch_context,baseline_context,gpt-4o,"Klątwa znika z $target_name, ale coś w ciemności to zauważa.",48.902943015865,,
+i09,invented,,,scratch_context,baseline_context,gpt-4o,Wybierz swoją nagrodę: <span color='gold'>$reward_a</span> lub <span color='gold'>$reward_b</span>.,95.86489268873385,,
+i10,invented,,,scratch_context,baseline_context,gpt-4o,"$player_name unosi zniszczony miecz w stronę burzowych chmur. Błyskawica uderza w ostrze, zadając <span color='red'>$damage</span> obrażeń od szoku wszystkim pobliskim wrogom - ale także przypalając im brwi.",58.686230517032556,,
+i11,invented,,,scratch_context,baseline_context,gpt-4o,"Odkrywasz zapieczętowany list pod materacem kapitana. Wosk nosi królewski herb, chociaż koperta jest podejrzanie pokryta okruchami.",66.57863942217229,,
+i12,invented,,,scratch_context,baseline_context,gpt-4o,"Wieśniacy gromadzą się wokół powalonej bestii, wiwatując, gdy jej ogromne ciało osuwa się w błoto. Burmistrz wychodzi naprzód, aby ci podziękować, a następnie cicho pyta, kto zapłaci za zniszczony rynek.",53.55330287056628,,
+i13,invented,,,scratch_context,baseline_context,gpt-4o,"$unit_name próbuje rzucić Burzę Kruków, ale zaklęcie nie udaje się w deszczu. Mimo to pojawia się jeden zdezorientowany kruk, kradnie guzik od najbliższego strażnika i odlatuje.",61.00882764590707,,
+i14,invented,,,scratch_context,baseline_context,gpt-4o,"Umieściłeś trzy kryształowe fragmenty na starożytnym ołtarzu, a komnata wypełniła się złotym światłem. Przez jeden wspaniały moment uwierzyłeś, że obudziłeś legendarną broń; wtedy ołtarz wydał pojedynczego, letniego ziemniaka.",55.41937978418719,,
+i15,invented,,,scratch_context,baseline_context,gpt-4o,"Rytuał się opłaca, przywracając <span color='green'>$amount</span> punktów życia $target_name. Niestety, wiąże się to z poważnymi konsekwencjami: trzy rozczarowane zjawy teraz zasiadają w sądzie, żądając, abyś rozliczył się ze swoich życiowych wyborów.",49.46172803821517,,
+f01,fuzzy_real,reworded,no,repair,v4_source_changes,gpt-4o,Piracki okręt flagowy,56.449702688092785,0.9047619047619048,57.14285714285714
+f02,fuzzy_real,addition,no,repair,v4_source_changes,gpt-4o,zaraza ($type),100.0,0.9285714285714286,61.53846153846154
+f03,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,Kampanie i scenariusze,100.0,0.7727272727272727,65.11627906976744
+f04,fuzzy_real,addition,no,repair,v4_source_changes,gpt-4o,"<ref>dst='..calendar' text='Kalendarz'</ref>
+<ref>dst='..geography' text='Geografia'</ref>",100.0,0.8222222222222222,33.54037267080745
+f05,fuzzy_real,addition,yes,repair,v4_source_changes,gpt-4o,Harmonogram pory dnia,18.663430148454356,0.6190476190476191,70.96774193548387
+f06,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,Merfolk,4.273504273504273,0.7142857142857143,57.14285714285714
+f07,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Mermen obywatel,7.900628535375036,0.4,74.07407407407408
+f08,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,Szkielet jeździec,100.0,0.4117647058823529,75.86206896551724
+f09,fuzzy_real,gender,yes,repair,v4_source_changes,gpt-4o,Smocza strażniczka,100.0,0.2222222222222222,100.0
+f10,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Krasnoludzki górnik,100.0,0.23809523809523808,80.0
+f11,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Jajo ogromnej mrówki,100.0,0.45,81.81818181818181
+f12,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,Klacz,100.0,0.8,100.0
+f13,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,"Jednostki <i>żywiołów</i> są odporne na truciznę, wyssanie życia i zarazę.",61.01330642333536,0.6756756756756757,55.10204081632652
+f14,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,"Jednostki z cechą <i>tępy</i> cierpią na 20% wzrost wymaganego doświadczenia, aby awansować.",71.22181010781836,0.5,66.21621621621621
+f15,fuzzy_real,gender,yes,repair,v4_source_changes,gpt-4o,Mroczny koń,49.00623006253688,0.0,100.0
+f16,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Ork okręt wojenny,64.77378696148135,0.7058823529411765,78.57142857142857
+f17,fuzzy_real,addition,no,repair,v4_source_changes,gpt-4o,Przełącz wyświetlanie bieżących klatek na sekundę. Zapisuje również te wartości do pliku w katalogu userdata.,57.41853313731426,0.8073394495412844,48.38709677419355
+f18,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,Orkowa barka bojowa,59.23424169529863,0.7368421052631579,64.51612903225806
+f19,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,Porządek i Liczba uderzeń,14.415521126047443,0.8,50.0
+f20,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,zatruta,100.0,0.75,85.71428571428572
+f21,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Królowa ognistych mrówek,100.0,0.5833333333333334,72.72727272727273
+f22,fuzzy_real,omission,no,repair,v4_source_changes,gpt-4o,Włącz tryb debugowania (nie działa w trybie wieloosobowym). Zobacz <ref dst='debug_commands'>polecenia trybu debugowania</ref>.,77.99856655865348,0.8031496062992126,43.0939226519337
+f23,fuzzy_real,addition,no,repair,v4_source_changes,gpt-4o,"• <ref dst='ability_regenerates_8'>Regeneracja</ref>: Niektóre jednostki (takie jak trolle) automatycznie odzyskują 8 PŻ na turę. Jeśli jednostka jest zatruta, zatrucie zostanie usunięte zamiast się leczyć.",75.92562318852198,0.6067961165048543,48.44290657439446
+f24,fuzzy_real,gender,yes,repair,v4_source_changes,gpt-4o,Smocza bojowniczka,100.0,0.2222222222222222,100.0
+f25,fuzzy_real,term,yes,repair,v4_source_changes,gpt-4o,Jajo ognistej mrówki,100.0,0.45,80.0
+f26,fuzzy_real,gender,yes,repair,v4_source_changes,gpt-4o,Smoczyca zagłady,100.0,0.3125,100.0
+f27,fuzzy_real,gender,yes,repair,v4_source_changes,gpt-4o,Smocza spalaczka,100.0,0.1875,100.0
+f28,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,"Jednostki <i>mechaniczne</i> są odporne na truciznę, wyssanie życia i zarazę.",66.15684597439046,0.6623376623376623,54.54545454545454
+f29,fuzzy_real,tag/formatting,no,repair,v4_source_changes,gpt-4o,"• <b>Jednostki leczące</b>: Jednostki z umiejętnością <ref dst='ability_cures'>leczy</ref> wyleczą truciznę we wszystkich sąsiadujących sojuszniczych jednostkach (zamiast leczenia, jeśli mają również tę umiejętność).",51.744465397097684,0.7647058823529411,45.28301886792453
+f30,fuzzy_real,term,no,repair,v4_source_changes,gpt-4o,Kot,100.0,1.0,66.66666666666667
+e01,edited,term,yes,repair,v4_source_changes,gpt-4o,Smok wodny,78.7749365155941,0.4166666666666667,66.66666666666667
+e02,edited,reworded,yes,repair,v4_source_changes,gpt-4o,"Ta opcja umożliwia połączenie się z oficjalnym serwerem gry. Znajdziesz się w poczekalni, gdzie możesz tworzyć nowe gry wedle własnego uznania. Znajdziesz tam również wiele gier już otwartych, a często również innych graczy i drużyny czekające na dołączenie do nowej rozgrywki.",97.59673319948405,0.061371841155234655,96.81528662420382
+e03,edited,term,yes,repair,v4_source_changes,gpt-4o,Królewski architekt,100.0,0.42105263157894735,57.14285714285714
+e04,edited,term,yes,repair,v4_source_changes,gpt-4o,Wydmowy łupieżca,39.28904428904429,0.0,100.0
+e05,edited,reworded,no,repair,v4_source_changes,gpt-4o,Druga straż — fourth hour,41.57574686827972,0.3793103448275862,92.3076923076923
+e06,edited,reworded,no,repair,v4_source_changes,gpt-4o,"Jaszczury są bardzo drobnej budowy, lecz pomimo związanej z tym delikatności są niesamowicie zwinne. Dzięki drobnej posturze potrafią w walce błyskawicznie przemknąć się przez obronę, która zatrzymałaby każdą większą istotę, co czyni z nich trudnym przeciwników.
+
+Ich preferowaną bronią są włócznie, którymi dzięki silnym kończynom potrafią zadawać poważne obrażenia, czy to w walce wręcz, czy z dystansu.",92.22756171972725,0.07971014492753623,96.25935162094763
+e07,edited,number,yes,repair,v4_source_changes,gpt-4o,"Na mapach poszczególnych scenariuszy występuje wiele różnych rodzajów terenu, z których każdy wpływa zarówno na szybkość poruszania się jednostek, jak i ich skuteczność w obronie.",80.23033484124501,0.11173184357541899,90.7488986784141
+e08,edited,gender,yes,repair,v4_source_changes,gpt-4o,"Ostateczny cios niszczy licza, uwalniając nagłą falę energii. Jej sługi padają bez życia na ziemię jak kukiełki, którym przecięto sznurki. Resztki niegdyś śmiertelnej skóry licza ulatują wraz z narosłym przez wieki plugastwem, uwalniając ogromną chmurę kurzu.",96.82765034647241,0.007692307692307693,99.1701244813278
+e09,edited,number,yes,repair,v4_source_changes,gpt-4o,"Ruszże się elfie, chyba że masz ochotę rozbić obóz w tym oślizgłym błocie. My na przykład nie mamy!",100.0,0.030303030303030304,98.22485207100591
+e10,edited,gender,yes,repair,v4_source_changes,gpt-4o,"Jeśli jednostka frontowa odniesie poważne obrażenia, można ją bezpiecznie odsunąć za linię obrony. Aby utrzymać linię trzeba będzie na ogół wycofaną jednostkę zastąpić jednostką rezerwową, więc warto utrzymywać kilka jednostek w drugiej linii. Jeśli w armii są leczący, ranne jednostki w drugiej linii szybko wrócą do zdrowia.",100.0,0.0,99.02597402597402
+e11,edited,addition,yes,repair,v4_source_changes,gpt-4o,"Jednostka pod Twoją kontrolą, która nie ruszała się w tej turze, może użyć jednego punktu ruchu, aby przywrócić 10% swoich punktów życia.",46.549182151601066,0.49635036496350365,66.97674418604652
+e12,edited,addition,no,repair,v4_source_changes,gpt-4o,Nie! Oni niszczą nasz dom! Gdzie są bogowie w tej chwili potrzeby?,70.39454994801193,0.6060606060606061,63.716814159292035
+e13,edited,number,yes,repair,v4_source_changes,gpt-4o,"Kliknij ten przycisk, by przeczytać poprzednie wskazówki z ""Księgi Wesnoth"".",100.0,0.02631578947368421,94.5945945945946
+e14,edited,term,no,repair,v4_source_changes,gpt-4o,"Ukończ stary samouczek ""Budowa""",63.850598706230485,0.35,80.0
+e15,edited,term,no,repair,v4_source_changes,gpt-4o,Smoki? Planowaliśmy ich użyć jako wierzchowców.,100.0,0.10416666666666667,90.52631578947368
+e16,edited,addition,no,repair,v4_source_changes,gpt-4o,"Myślę... Myślę, że jeśli się nieco skoncentruję mogę powiedzieć wam gdzie się znajduje. Ale trudno mi się skupić pod taką presją.",93.84307830787577,0.32558139534883723,75.5980861244019
+e17,edited,omission,no,repair,v4_source_changes,gpt-4o,"Możesz sprawić, by jednostka sama się poruszała przez kilka tur — wybierz ją, a następnie kliknij cel.",100.0,0.47150259067357514,75.8364312267658
+e18,edited,addition,no,repair,v4_source_changes,gpt-4o,"Gdyby nie zbroja, niektórych smoczych wojowników trudno byłoby odróżnić od prawdziwych, dzikich smoków, szczególnie ludziom i innym rasom pomniejszym, które smoki znają tylko z legend. Te potężne stworzenia noszą miano Smoków zagłady i posiadają potężny wewnętrzny ogień i truciznę, przez co są całkowicie odporne na ataki ogniste.",94.2950390625014,0.03323262839879154,98.03220035778175
+e19,edited,reworded,no,repair,v4_source_changes,gpt-4o,Czy nie możemy po prostu spróbować uniknąć orków?,82.67157956543065,0.24489795918367346,81.69014084507043
+e20,edited,term,yes,repair,v4_source_changes,gpt-4o,Elficka czarodziejka,100.0,0.0,100.0
+e21,edited,term,no,repair,v4_source_changes,gpt-4o,"Termin ""<italic>text='mechaniczne'</italic>"", opisuje artefakty tworzone przez istoty rozumne, ożywiane ni to za pomocą natury, ni nekromancji. Większość z nich nie porusza się, ani nie myśli samodzielnie, jednak niektóre z nich posiadają takie zdolności za sprawą cudów inżynierii.",100.0,0.05653710247349823,94.81765834932821
+e22,edited,reworded,yes,repair,v4_source_changes,gpt-4o,Niezgorszy prezent! I wszystko za jedną zabitą istotę?,71.01321258032472,0.24074074074074073,78.125
+e23,edited,omission,no,repair,v4_source_changes,gpt-4o,Mistrzu Delfadorze! Nadchodzą ze wszystkich stron! Co robić?,80.01289550653354,0.2894736842105263,89.6103896103896
+e24,edited,term,yes,repair,v4_source_changes,gpt-4o,Gobliński podżegacz wojenny,91.65166943763904,0.5555555555555556,70.96774193548387
+e25,edited,addition,no,repair,v4_source_changes,gpt-4o,Witaj ponownie w Wesnoth!,100.0,0.36,88.37209302325581
+e26,edited,term,no,repair,v4_source_changes,gpt-4o,"Strefa kontroli jednostki obejmuje 6 pól bezpośrednio do niej przylegających, a jeśli jednostka wejdzie w strefę kontroli przeciwnika, będzie musiała się zatrzymać. Jednostki ze zdolnością latania ignorują wrogie strefy kontroli i mogą przelatywać przez nie bez przeszkód, nie musząc się zatrzymywać. Jednostki poziomu 0 uznawane są za zbyt słabe, by generować strefę kontroli, i wszystkie jednostki mogą bez przeszkód przechodzić przez sąsiadujące z nimi pola.",98.48458461177884,0.023706896551724137,97.6536312849162
+e27,edited,reworded,yes,repair,v4_source_changes,gpt-4o,"Pamiętaj o wycofywaniu rannych jednostek do zamków i rekrutowaniu większej ich liczby, gdy zajdzie taka potrzeba. Szczególnie opiekuj się jednostkami z największą liczbą <i>punktów doświadczenia</i> (PD), by mogły przetrwać, awansować na wyższy poziom i zyskać nowe umiejętności.",92.6171338921288,0.053763440860215055,95.07389162561576
+e28,edited,term,yes,repair,v4_source_changes,gpt-4o,"Starego króla? Słyszałam o tym, ale wiem, że to wszystko nieprawda. Rodzice mi powiedzieli.",100.0,0.10989010989010989,93.49112426035504
+e29,edited,term,yes,repair,v4_source_changes,gpt-4o,"Konradzie, tak jak obiecałam, masz tu moją sakwę, jest pełna klejnotów.",100.0,0.09859154929577464,94.23076923076923
+e30,edited,number,yes,repair,v4_source_changes,gpt-4o,Co teraz zrobię? Jak długo jeszcze mam podążać tą rzeką?,65.95131216870594,0.05172413793103448,95.89041095890411
+i01,invented,,,repair,v4_source_changes,gpt-4o,Goblin upuszcza zardzewiały klucz.,100.0,0.7727272727272727,53.333333333333336
+i02,invented,,,repair,v4_source_changes,gpt-4o,Lisz podnosi jeden kościsty palec. Najwyraźniej teraz twoja kolej na cierpienie.,69.78541710456537,0.8170731707317073,47.5609756097561
+i03,invented,,,repair,v4_source_changes,gpt-4o,"Witaj na polu bitwy. Wybierz wroga, aby zobaczyć jego umiejętności, odporności i obecne efekty statusu przed podjęciem kolejnej akcji.",44.925394481523384,0.7226890756302521,46.62921348314607
+i04,invented,,,repair,v4_source_changes,gpt-4o,Zmiany nie zostały zapisane. Czy chcesz zapisać swoje postępy przed powrotem do menu głównego?,75.60016177464917,0.8191489361702128,48.38709677419355
+i05,invented,,,repair,v4_source_changes,gpt-4o,"Most jest zniszczony. Oczywiście, królewscy inżynierowie nigdzie nie są do znalezienia.",46.0326264425649,0.8275862068965517,52.071005917159766
+i06,invented,,,repair,v4_source_changes,gpt-4o,"Zimny wiatr wstał z krypty, niosąc szepty w języku, który prawie rozumiałeś.",43.56335013409943,0.7763157894736842,46.616541353383454
+i07,invented,,,repair,v4_source_changes,gpt-4o,Zadaj $damage obrażeń fizycznych wszystkim wrogom w promieniu $distance metrów.,80.75744093602357,0.7848101265822784,45.033112582781456
+i08,invented,,,repair,v4_source_changes,gpt-4o,"Klątwa znika z $target_name, ale coś w ciemności zauważa.",45.63361480890627,0.7586206896551724,50.38167938931297
+i09,invented,,,repair,v4_source_changes,gpt-4o,Wybierz swoją nagrodę: <span color='gold'>$reward_a</span> lub <span color='gold'>$reward_b</span>.,95.86489268873385,0.8455284552845529,38.862559241706165
+i10,invented,,,repair,v4_source_changes,gpt-4o,"$player_name unosi wyszczerbiony miecz w stronę burzowych chmur. Błyskawica uderza w ostrze, zadając <span color='red'>$damage</span> obrażeń od wstrząsu wszystkim pobliskim wrogom - ale także przypalając im brwi.",59.3934070280433,0.7741935483870968,43.75
+i11,invented,,,repair,v4_source_changes,gpt-4o,"Odkrywasz zapieczętowany list pod materacem kapitana. Wosk nosi królewski herb, chociaż koperta jest podejrzanie pokryta okruchami.",66.57863942217229,0.7165775401069518,47.878787878787875
+i12,invented,,,repair,v4_source_changes,gpt-4o,"Wieśniacy gromadzą się wokół powalonej bestii, wiwatując, gdy jej ogromne ciało zapada się w błoto. Burmistrz wychodzi naprzód, aby ci podziękować, a następnie cicho pyta, kto zapłaci za zniszczony rynek.",53.195289277638025,0.758893280632411,48.22695035460993
+i13,invented,,,repair,v4_source_changes,gpt-4o,"$unit_name próbuje rzucić Zaklęcie Kruków, ale zaklęcie nie udaje się w deszczu. Jednak pojawia się jeden zdezorientowany kruk, kradnie guzik od najbliższego strażnika i odlatuje.",54.61593097670158,0.8547486033519553,46.706586826347305
+i14,invented,,,repair,v4_source_changes,gpt-4o,"Umieściłeś trzy kryształowe fragmenty w starożytnym ołtarzu, a komnata wypełniła się złotym światłem. Przez jeden wspaniały moment uwierzyłeś, że obudziłeś legendarną broń; wtedy ołtarz wydał pojedynczego, letniego ziemniaka.",54.76987205039306,0.7688888888888888,46.973365617433416
+i15,invented,,,repair,v4_source_changes,gpt-4o,"Rytuał się opłaca, przywracając <span color='green'>$amount</span> HP do $target_name. Niestety, wiąże się to z poważnymi konsekwencjami: trzy rozczarowane zjawy teraz zasiadają na dworze, żądając, abyś rozliczył się ze swoich życiowych wyborów.",47.68532243223601,0.8038461538461539,44.631578947368425

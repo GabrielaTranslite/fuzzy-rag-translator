@@ -7,7 +7,7 @@ sentence-transformers
 faiss-cpu
 polib
 qdrant-client
-streamlit
+streamlit==1.61.1
 psycopg2-binary
 rapidfuzz
 openpyxl
