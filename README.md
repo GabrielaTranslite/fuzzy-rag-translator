@@ -32,7 +32,7 @@ the game, not in a generic voice.
 **Why the fuzzy layer.** When a new string is almost identical to one already in
 the memory (a **fuzzy match**), retranslating it from scratch is wasteful and risky:
 a from-scratch model tends to rewrite wording a human already approved, drift on
-game-specific terminology, and break consistency. If we have a great, human-approved
+game-specific terminology, and break consistency. In many fast pace games, we want to keep using specific phrases, so that the players can quickly find they way around the game. If we have a great, human-approved
 match, we want to **keep it** and change only what the new source actually changed.
 
 **Why "repair" and not "translate".** That "change only what changed" step is the
@@ -129,7 +129,7 @@ trusting a bad match. Both behaviors are visible in the app.
 <!-- Add images to docs/img/ and a short screen recording. -->
 <!-- In Streamlit you can record a video from the top-right menu (see the LLM Zoomcamp docs), then drag-drop it into the GitHub README editor. -->
 
-- Live repair UI: `![alt text](image-1.png)`
+- Live repair UI: ![alt text](image-1.png)
 - Evaluation explorer: ![alt text](image-2.png)
 - Monitoring dashboard: ![alt text](image-3.png)
 
@@ -155,7 +155,7 @@ Three-condition ladder (each rung adds one ingredient), overall chrF:
 The clearest win is grammatical gender: chrF goes 18 -> 39 -> 92 across the ladder.
 Preservation on well-matched cases is about 0.2 (the approved wording is kept while
 the new source is still translated correctly), which is the quantitative statement
-of "edit, not rewrite".
+of "edit, not rewrite". This result is of particular importance for EN>PL translations, since Polish carries gender information through inflection. In Polish, grammatical gender is not just a property of nouns; it triggers extensive inflectional agreement across adjectives, pronouns, numerals, and verbs. Therefore a model that takes that information into account and keeps game terminology might be a significant effectiveness booster for the game localization teams.
 
 ---
 
