@@ -32,7 +32,7 @@ the game, not in a generic voice.
 **Why the fuzzy layer.** When a new string is almost identical to one already in
 the memory (a **fuzzy match**), retranslating it from scratch is wasteful and risky:
 a from-scratch model tends to rewrite wording a human already approved, drift on
-game-specific terminology, and break consistency. In many fast pace games, we want to keep using specific phrases, so that the players can quickly find they way around the game. If we have a great, human-approved
+game-specific terminology, and break consistency. In many fast-paced games, we want to keep using specific phrases, so that players can quickly find their way around the game. If we have a great, human-approved
 match, we want to **keep it** and change only what the new source actually changed.
 
 **Why "repair" and not "translate".** That "change only what changed" step is the
@@ -60,7 +60,7 @@ translations instead of overwriting them.
   context prefix before a caret, for example `female^Drake Arbiter` or
   `race+female^Horse`. These are disambiguation hints, not text to translate. They
   are stripped into a separate `context` field at ingest and reused as a grammatical
-  hint (see [normalization](#the-flow)).
+  hint (see [normalization](#what-it-does-the-flow)).
 - **License: GPL v2+**. The `.po` files are redistributed here under that license
   with `data/COPYING` retained and attribution to the Wesnoth translation teams.
   `scripts/fetch_data.py` can also re-download them from a pinned upstream tag.
@@ -126,12 +126,12 @@ trusting a bad match. Both behaviors are visible in the app.
 
 ## Screenshots and demo
 
-<!-- Add images to docs/img/ and a short screen recording. -->
+<!-- Put image-1.png, image-2.png, image-3.png next to this README, and add a short screen recording. -->
 <!-- In Streamlit you can record a video from the top-right menu (see the LLM Zoomcamp docs), then drag-drop it into the GitHub README editor. -->
 
-- Live repair UI: ![alt text](image-1.png)
-- Evaluation explorer: ![alt text](image-2.png)
-- Monitoring dashboard: ![alt text](image-3.png)
+- Live repair UI: ![Live repair UI](image-1.png)
+- Evaluation explorer: ![Evaluation explorer](image-2.png)
+- Monitoring dashboard: ![Monitoring dashboard](image-3.png)
 
 
 
