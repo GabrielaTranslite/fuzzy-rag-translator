@@ -1,72 +1,240 @@
-# Fuzzy Repair Translator
+# Fuzzy-Repair MT Assistant
 
-A project scaffold for a fuzzy TM RAG translator from English to Polish.
+A retrieval-augmented translation assistant for video game localization. It takes a
+new or slightly changed English game string, finds the closest **human-approved**
+translation in a translation memory, and asks an LLM to **repair only the part that
+changed**, keeping the approved wording everywhere else. In short: edit, do not
+rewrite.
 
-## Structure
+This project was built for the LLM Zoomcamp capstone. It is written so that a
+reviewer who did not take the course, and who does not read Polish, can understand
+the problem, the data, and the system. Every Polish example below comes with a
+literal English gloss.
 
-- `data/`
-  - `tm/`: translation memory store with approved EN→PL segments
-  - `gold/`: gold evaluation pairs
-  - `COPYING`: GPL Wesnoth license and attribution
-- `src/`
-  - `ingest.py`: parse `.po`, filter fuzzy entries, build TM store and embeddings
-  - `retrieve.py`: fuzzy (edit distance), semantic, and rerank retrieval
-  - `repair.py`: normalize source, build repair prompts, call LLM
-  - `db.py`: log repair outputs to Postgres
-- `eval/`: evaluation notebooks
-- `app.py`: Streamlit interface
-- `grafana/`: Grafana dashboard assets
-- `Dockerfile`, `docker-compose.yaml`, `.env.example`
+> Status at a glance: retrieval + LLM evaluation done, a working Streamlit app,
+> an automated ingestion pipeline (Prefect), live monitoring (Grafana), and a full
+> Docker Compose stack. See the [Evaluation criteria map](#evaluation-criteria-map).
 
-## Data
+---
 
-The knowledge base is a translation memory built from the Polish localization of The Battle for Wesnoth, an open-source strategy game. Its translations are made by human volunteer translators and released under the GPL (version 2 or later), which is what makes them safe to reuse here. See `data/COPYING` for the full license and attribution.
+## Why this project exists (for readers outside games and translation)
 
-The source files are gettext `.po` files, where each entry pairs an English string (`msgid`) with its approved Polish translation (`msgstr`). I kept only entries that are actually translated and not marked `fuzzy`, so every pair in the memory has been confirmed by a human reviewer. Plural entries are skipped for now, because one English form maps to three Polish forms and does not fit a clean one-to-one segment model.
+**Why translation memory and RAG.** Game localization is not generic translation.
+The same English word must be rendered differently depending on the world of the
+game: a medieval setting, a far-future sci-fi setting, a high-fantasy world, or an
+antiquity setting each have their own register and terminology. Human translators
+keep a **translation memory** (TM): a database of source sentences they already
+translated and that were reviewed and approved. Reusing it keeps terminology and
+tone consistent across a huge project. That memory is exactly the "knowledge base"
+that a RAG system should retrieve from, so that the model answers in the voice of
+the game, not in a generic voice.
 
-After filtering, the memory holds 1,624 segments. The English side has 195,374 characters across 33,119 words. The Polish side has 209,544 characters but only 29,427 words.
+**Why the fuzzy layer.** When a new string is almost identical to one already in
+the memory (a **fuzzy match**), retranslating it from scratch is wasteful and risky:
+a from-scratch model tends to rewrite wording a human already approved, drift on
+game-specific terminology, and break consistency. If we have a great, human-approved
+match, we want to **keep it** and change only what the new source actually changed.
 
-That gap is worth a second look. Polish ends up with about 7% more characters and 11% fewer words than English. It looks backwards at first, but it is what you would expect for this language pair: Polish has no articles and fewer short function words, so the word count drops, while its inflected forms run longer, so the character count rises. The numbers are a small sign that these are genuine human translations and not something mechanical.
+**Why "repair" and not "translate".** That "change only what changed" step is the
+core idea, known in the field as fuzzy-match repair, Neural Fuzzy Repair, or
+automatic post-editing. The system retrieves the approved pair and instructs the
+LLM to edit the minimum. This preserves human work, saves cost, and keeps the
+output consistent.
 
-Each record keeps the source and target text, the gettext context (`msgctxt`) where present, the extracted WML comment, the source references, any flags, and a stable `id` derived from the file, context, and source string.
+**Who it helps.** Localization teams and translation project managers who work with
+large, evolving game texts and want machine assistance that respects their approved
+translations instead of overwriting them.
 
-### What a .po file is
+---
 
-If you have never worked with software translation, here is the short version. When a program needs to exist in more than one language, the text is not hardcoded. Developers mark each translatable string, and a tool collects those strings into a `.po` file. The format comes from GNU gettext, a localization system that has been around for decades. A translator then opens that file and writes the target language next to each original string.
+## The data
 
-One `.po` entry is one unit of translation. At its simplest it has two parts: `msgid`, the original English string, and `msgstr`, the translation. The file can also carry extra notes around each entry: where the string appears in the code, a short context label that tells apart two identical strings, and flags such as `fuzzy`, which marks a translation a tool guessed but no human has approved yet. Those notes are what let me keep only the reviewed, human-approved pairs.
+- Source: **The Battle for Wesnoth**, an open-source fantasy strategy game, and its
+  human English to Polish translations (gettext `.po` files: `msgid` is English,
+  `msgstr` is the approved Polish).
+- Five text domains (help, campaign, manual, tutorial, units), **2852** approved
+  segments after filtering.
+- Quality gate: only entries that are translated and **not** flagged `fuzzy` by the
+  translators are used, so the memory contains only reviewed, approved translations.
+- A Wesnoth-specific quirk handled here: some sources carry an inline gettext
+  context prefix before a caret, for example `female^Drake Arbiter` or
+  `race+female^Horse`. These are disambiguation hints, not text to translate. They
+  are stripped into a separate `context` field at ingest and reused as a grammatical
+  hint (see [normalization](#the-flow)).
+- **License: GPL v2+**. The `.po` files are redistributed here under that license
+  with `data/COPYING` retained and attribution to the Wesnoth translation teams.
+  `scripts/fetch_data.py` can also re-download them from a pinned upstream tag.
 
-### Fields in the translation memory
+---
 
-Loaded into a DataFrame, `translation_memory.jsonl` has one row per segment with these columns:
-
-| Column | What it holds |
-|---|---|
-| `id` | Stable identifier of the segment, derived from the source file, context, and English string. The same input always produces the same id. |
-| `source_file` | The `.po` file the segment came from, for example `pl_units.po`. |
-| `source` | The English string (the `msgid`). |
-| `target` | The approved Polish translation (the `msgstr`). |
-| `msgctxt` | Optional gettext context that separates two identical English strings used in different places. Empty when there is none. |
-| `wml_context` | The code comment extracted from the game, for example `[trait]: id=undead`. It hints at what kind of string this is. |
-| `occurrences` | Where the string is used in the source, given as file and line references. |
-| `flags` | Any gettext flags on the entry, such as `c-format`, which signals printf-style placeholders like `%d`. |
-
-The analysis notebook adds a few extra columns on top of these, such as word-length buckets, but those exist only for exploration and are not part of the memory itself.
-
-## Run the app
+## What it does (the flow)
 
 ```
-pip install -r requirements.txt
-streamlit run app.py
+English source
+   |
+   v
+strip context prefix        (normalization.py: "female^Drake Arbiter" -> context "female", text "Drake Arbiter")
+   |
+   v
+fuzzy retrieval             (rapidfuzz edit distance over the approved sources, top match + score 0..100)
+   |
+   +--- score >= 55 ------>  REPAIR: give the LLM the approved English+Polish pair and the
+   |                          context hint, ask it to edit only what changed  (edit, not rewrite)
+   |
+   +--- score <  55 ------>  FALLBACK: no trustworthy match, translate from scratch with the hint
+   |
+   v
+output + metrics (retrieval score, preservation) + user feedback
+   |
+   v
+Postgres  ->  Grafana dashboard (live monitoring)
 ```
 
-Run it from the repo root, with a `.env` file present (see `.env.example`).
-`app.py` reads `OPENAI_API_KEY` / `OPENAI_MODEL` from `.env` and the translation
-memory from `data/tm/translation_memory.jsonl`; Postgres is optional (feedback
-falls back to `eval/app_logs.jsonl` when the database is unreachable).
+The **55** threshold is not a guess. It is derived from the evaluation results:
+below it, repairing an unrelated match hurts quality; above it, repair helps and
+the gain grows with the match score. See
+`eval/02_llm_eval.ipynb`, section "Choosing a retrieval-quality threshold".
 
-## Notes
+A semantic retriever (Qdrant + sentence embeddings) is also implemented and
+evaluated (see `eval/01_retrieval_eval.ipynb`), but the live product uses fuzzy
+(edit-distance) retrieval, because for fuzzy-match repair the textually closest
+approved segment is the right signal and it gives a clean, interpretable threshold.
 
-- The project currently has `.po` files in `data/` and an existing `data/tm` JSONL store.
-- `src/ingest.py` uses `polib` and `sentence-transformers` to generate embeddings.
-- `docker-compose.yaml` includes `app`, `qdrant`, and `db` services.
+---
+
+## Example (no Polish needed to follow it)
+
+A grammatical-gender case (`f09`). Polish marks gender on nouns and adjectives
+through word endings, so the correct form cannot be guessed from the English name
+alone; the approved game term has to be known.
+
+| step | value | gloss |
+|------|-------|-------|
+| New English source | `Drake Arbiter` (needs the feminine form) | a unit name |
+| From scratch | `Drake Arbiter` | left untranslated, the model did not know the term |
+| Repair retrieves | approved `Smoczy strażnik` | the masculine form already in the memory |
+| Repaired output | `Smocza strażniczka` | correct feminine form |
+
+Only the endings change: Smocz**y** strażni**k** (masculine) becomes
+Smocz**a** strażni**czka** (feminine). The approved term is reused; the gender is
+fixed. That is the whole idea on one line.
+
+When no close match exists, the app says so and translates from scratch instead of
+trusting a bad match. Both behaviors are visible in the app.
+
+---
+
+## Screenshots and demo
+
+<!-- Add images to docs/img/ and a short screen recording. -->
+<!-- In Streamlit you can record a video from the top-right menu (see the LLM Zoomcamp docs), then drag-drop it into the GitHub README editor. -->
+
+- Live repair UI: `![alt text](image.png)`
+- Evaluation explorer: `docs/img/eval_explorer.png`
+- Monitoring dashboard: `docs/img/monitoring.png`
+
+_(Screenshots to be added.)_
+
+---
+
+## Results (highlights)
+
+Evaluation over a hand-built gold set of 75 cases (fuzzy_real, edited, invented),
+scored with **chrF** (character-level similarity to a human reference, 0 to 100)
+and a **preservation** metric (how much of the approved wording was kept, 0 means
+kept verbatim). Full detail and plain-language commentary in `eval/02_llm_eval.ipynb`.
+
+Three-condition ladder (each rung adds one ingredient), overall chrF:
+
+| condition | what it has | chrF |
+|-----------|-------------|------|
+| scratch | translate blind | 54.7 |
+| scratch_context | + grammatical hint | 58.5 |
+| repair | + retrieved approved pair | **76.7** |
+
+The clearest win is grammatical gender: chrF goes 18 -> 39 -> 92 across the ladder.
+Preservation on well-matched cases is about 0.2 (the approved wording is kept while
+the new source is still translated correctly), which is the quantitative statement
+of "edit, not rewrite".
+
+---
+
+## Quick start
+
+Full instructions, environment variables, and troubleshooting are in
+**[SETUP.md](SETUP.md)**. The short version:
+
+```bash
+cp .env.example .env          # then fill in OPENAI_API_KEY
+docker compose up -d          # qdrant, postgres, app, grafana
+python scripts/seed_monitoring.py   # optional: seed the dashboard with eval data
+```
+
+- App: http://localhost:8501
+- Monitoring (Grafana): http://localhost:3000 (login from `GRAFANA_ADMIN_PASSWORD`)
+
+You need Docker, and an OpenAI API key in `.env`. To run the app without Docker,
+see SETUP.md.
+
+---
+
+## Evaluation criteria map
+
+Where each LLM Zoomcamp criterion is addressed, so reviewers can find things fast.
+
+| Criterion | Where |
+|-----------|-------|
+| Problem description | This README (Why this project exists, The data, The flow) |
+| Retrieval flow | `src/retrieve.py` (fuzzy + semantic), `app.py` (live repair uses retrieval + LLM) |
+| Retrieval evaluation | `eval/01_retrieval_eval.ipynb` (fuzzy vs semantic, hit-rate and MRR by edit type) |
+| LLM evaluation | `eval/02_llm_eval.ipynb` (three-condition ladder, chrF + preservation, threshold derivation) |
+| Interface | `app.py` (Streamlit: Live repair + Evaluation explorer) |
+| Ingestion pipeline | `scripts/build_tm_flow.py` (Prefect flow: ingest + index), `src/ingest.py`, `scripts/fetch_data.py` |
+| Monitoring | `docker-compose.yaml` (Grafana + Postgres), `grafana/provisioning/` (9-panel dashboard), feedback captured in the app |
+| Containerization | `docker-compose.yaml` (qdrant, db, app, grafana), `Dockerfile` |
+| Reproducibility | pinned `requirements.txt`, committed data under GPL, `SETUP.md`, `db/init/01_schema.sql` |
+| Best practices | query rewriting via context normalization (`src/normalization.py`); semantic retriever evaluated in `eval/01`; see the note below |
+
+Best-practices note (honest scope): user-query rewriting is implemented, because
+the caret context is normalized and reused as a grammatical hint. A semantic
+retriever is implemented and evaluated, but the two retrievers are not fused into a
+single hybrid ranker, so this is described as "fuzzy used, semantic evaluated"
+rather than claimed as hybrid search.
+
+---
+
+## Project structure
+
+```
+app.py                     Streamlit app (Live repair + Evaluation explorer)
+src/
+  ingest.py                parse .po -> normalized TM (data/tm/translation_memory.jsonl)
+  normalization.py         strip_context / context-hint helper (single source of truth)
+  retrieve.py              fuzzy_retrieval (product) + semantic_retrieval (evaluated)
+  repair.py                repair prompts + LLM call (edit the approved target)
+  translate.py             from-scratch translation (baseline + fallback path)
+  index_qdrant.py          build the semantic index (used in eval / pipeline)
+  db.py                    Postgres logging (schema + log_inference / log_feedback, JSONL fallback)
+eval/
+  01_retrieval_eval.ipynb  fuzzy vs semantic retrieval evaluation
+  02_llm_eval.ipynb        LLM evaluation ladder + metrics + threshold + reviewer notes
+  gold_set.jsonl           hand-built gold set (75 cases)
+  llm_runs.jsonl           cached model outputs (feeds the Evaluation explorer + seed)
+scripts/
+  fetch_data.py            download the .po from upstream (pinned tag)
+  build_tm_flow.py         Prefect flow: ingest -> index
+  seed_monitoring.py       load eval results into Postgres so the dashboard is not empty
+db/init/01_schema.sql      canonical monitoring schema (repair_logs)
+grafana/provisioning/      Grafana datasource + dashboard as code
+data/                      the .po sources, COPYING, generated TM
+docker-compose.yaml        qdrant + postgres + app + grafana
+Dockerfile                 app image
+```
+
+---
+
+## License
+
+Code is under the MIT license. The bundled Wesnoth translation data in `data/` is
+under **GPL v2+** (see `data/COPYING`), courtesy of the Wesnoth project and its
+volunteer translators.
