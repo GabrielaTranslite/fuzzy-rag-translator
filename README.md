@@ -11,8 +11,7 @@ reviewer who did not take the course, and who does not read Polish, can understa
 the problem, the data, and the system. Every Polish example below comes with a
 literal English gloss.
 
-Watch video presentation: 
-[<div style="position: relative; padding-bottom: 80.89887640449437%; height: 0;"><iframe src="https://www.loom.com/embed/834a24f56df74e3ca296b7ced09ac83f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>](https://www.loom.com/share/834a24f56df74e3ca296b7ced09ac83f)
+▶ [Watch the demo (Loom)](https://www.loom.com/share/834a24f56df74e3ca296b7ced09ac83f)
 
 > Status at a glance: retrieval + LLM evaluation done, a working Streamlit app,
 > an automated ingestion pipeline (Prefect), live monitoring (Grafana), and a full
