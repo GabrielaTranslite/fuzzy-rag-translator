@@ -1,15 +1,15 @@
-# Core runtime dependencies
-numpy
-pandas
-python-dotenv
-openai
-sentence-transformers
-faiss-cpu
-polib
-qdrant-client
+# Core runtime + pipeline + eval dependencies (pinned for reproducibility).
+# Versions taken from the working virtual environment.
+numpy==2.4.6
+pandas==3.0.5
+python-dotenv==1.2.2
+openai==2.53.0
+sentence-transformers==5.7.0
+polib==1.2.0
+qdrant-client==1.19.0
 streamlit==1.61.1
-psycopg2-binary
-rapidfuzz
-openpyxl
-sacrebleu
+psycopg2-binary==2.9.12
+rapidfuzz==3.14.5
+openpyxl==3.1.5
+sacrebleu==2.6.0
 prefect==3.8.5

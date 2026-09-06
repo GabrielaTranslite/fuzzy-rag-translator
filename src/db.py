@@ -16,6 +16,14 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
 # Relative to this file so it works regardless of the process cwd.
 FALLBACK_LOG_PATH = os.path.join(os.path.dirname(__file__), "..", "eval", "app_logs.jsonl")
 
+# Columns written by log_inference. Must match db/init/01_schema.sql.
+INSERT_COLUMNS = [
+    "id", "source_text", "output_text", "tm_source", "tm_target",
+    "retrieval_score", "preservation", "context", "model",
+    "prompt_tokens", "completion_tokens", "cost_usd",
+    "latency_ms", "condition", "fell_back",
+]
+
 try:
     import psycopg2
 except ImportError:
@@ -36,25 +44,32 @@ def get_connection() -> Optional["psycopg2.extensions.connection"]:
 
 
 def ensure_schema() -> None:
+    """Create repair_logs if missing. Matches db/init/01_schema.sql column-for-column,
+    so the app works even against a Postgres that did not run the init script."""
     conn = get_connection()
     try:
         with conn.cursor() as cur:
             cur.execute(
                 """
                 CREATE TABLE IF NOT EXISTS repair_logs (
-                    id              TEXT PRIMARY KEY,
-                    ts              TIMESTAMPTZ DEFAULT NOW(),
-                    source_text     TEXT NOT NULL,
-                    output_text     TEXT NOT NULL,
-                    tm_source       TEXT,
-                    tm_target       TEXT,
-                    retrieval_score DOUBLE PRECISION,
-                    preservation    DOUBLE PRECISION,
-                    context         TEXT,
-                    model           TEXT,
-                    latency_ms      INTEGER,
-                    feedback        TEXT,
-                    user_correction TEXT
+                    id                TEXT PRIMARY KEY,
+                    ts                TIMESTAMPTZ NOT NULL DEFAULT now(),
+                    source_text       TEXT NOT NULL,
+                    output_text       TEXT NOT NULL,
+                    tm_source         TEXT,
+                    tm_target         TEXT,
+                    retrieval_score   DOUBLE PRECISION,
+                    preservation      DOUBLE PRECISION,
+                    context           TEXT,
+                    model             TEXT,
+                    prompt_tokens     INTEGER,
+                    completion_tokens INTEGER,
+                    cost_usd          DOUBLE PRECISION,
+                    latency_ms        INTEGER,
+                    condition         TEXT,
+                    fell_back         BOOLEAN DEFAULT FALSE,
+                    feedback          TEXT,
+                    user_correction   TEXT
                 )
                 """
             )
@@ -71,22 +86,19 @@ def _append_fallback(record: dict) -> None:
 
 
 def log_inference(record: dict) -> None:
-    """Insert one inference row (id, source_text, output_text, tm_source, tm_target,
-    retrieval_score, preservation, context, model, latency_ms). Falls back to a
-    JSONL file if Postgres is unreachable so the app never crashes."""
+    """Insert one inference row. Missing keys default to NULL, so callers can omit
+    optional fields. Falls back to a JSONL file if Postgres is unreachable so the
+    app never crashes."""
+    params = {col: record.get(col) for col in INSERT_COLUMNS}
+    cols = ", ".join(INSERT_COLUMNS)
+    placeholders = ", ".join(f"%({col})s" for col in INSERT_COLUMNS)
     try:
         conn = get_connection()
         try:
             with conn.cursor() as cur:
                 cur.execute(
-                    """
-                    INSERT INTO repair_logs
-                        (id, source_text, output_text, tm_source, tm_target,
-                         retrieval_score, preservation, context, model, latency_ms)
-                    VALUES (%(id)s, %(source_text)s, %(output_text)s, %(tm_source)s, %(tm_target)s,
-                            %(retrieval_score)s, %(preservation)s, %(context)s, %(model)s, %(latency_ms)s)
-                    """,
-                    record,
+                    f"INSERT INTO repair_logs ({cols}) VALUES ({placeholders})",
+                    params,
                 )
                 conn.commit()
         finally:
@@ -100,8 +112,7 @@ def log_inference(record: dict) -> None:
 
 def log_feedback(record_id: str, feedback: str, user_correction: Optional[str] = None) -> None:
     """Update a row with the user's feedback. Falls back to a JSONL file if
-    Postgres is unreachable, or if the row does not exist there (for example
-    because the original insert itself went to the fallback file)."""
+    Postgres is unreachable, or if the row does not exist there."""
     try:
         conn = get_connection()
         try:

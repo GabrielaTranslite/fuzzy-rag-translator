@@ -74,14 +74,19 @@ New source (English): {new_source}"""
         {"role": "user", "content": user},
     ]
     
-def call_repair(messages: list, model: str, client: OpenAI) -> str:
-    """Send the messages to the API and return the translation."""
+def call_repair(messages: list, model: str, client: OpenAI, return_usage: bool = False):
+    """Send the messages to the API and return the translation.
+    With return_usage=True, return (text, {"prompt_tokens", "completion_tokens"})."""
     response = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=0,
     )
-    return response.choices[0].message.content.strip()
+    text = response.choices[0].message.content.strip()
+    if return_usage:
+        u = response.usage
+        return text, {"prompt_tokens": u.prompt_tokens, "completion_tokens": u.completion_tokens}
+    return text
 
 def repair_segment(new_source, tm, target_language, prompt_version, model, client):
     """Orchestration: retrieve -> build messages -> call LLM -> return."""

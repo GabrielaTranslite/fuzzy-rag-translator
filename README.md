@@ -129,11 +129,11 @@ trusting a bad match. Both behaviors are visible in the app.
 <!-- Add images to docs/img/ and a short screen recording. -->
 <!-- In Streamlit you can record a video from the top-right menu (see the LLM Zoomcamp docs), then drag-drop it into the GitHub README editor. -->
 
-- Live repair UI: `![alt text](image.png)`
-- Evaluation explorer: `docs/img/eval_explorer.png`
-- Monitoring dashboard: `docs/img/monitoring.png`
+- Live repair UI: `![alt text](image-1.png)`
+- Evaluation explorer: ![alt text](image-2.png)
+- Monitoring dashboard: ![alt text](image-3.png)
 
-_(Screenshots to be added.)_
+
 
 ---
 

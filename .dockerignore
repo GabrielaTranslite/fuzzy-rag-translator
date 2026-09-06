@@ -1,0 +1,13 @@
+.venv/
+.git/
+.gitignore
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+.env
+*.bak
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.duckdb
+docker-compose.yaml
+docker-compose.yaml.bak

@@ -20,14 +20,19 @@ def build_translation_messages(new_source: str, target_language: str, prompt_ver
     ]
 
 
-def call_translation(messages: list, model: str, client: OpenAI) -> str:
-    """Send the messages to the API and return the translation."""
+def call_translation(messages: list, model: str, client: OpenAI, return_usage: bool = False):
+    """Send the messages to the API and return the translation.
+    With return_usage=True, return (text, {"prompt_tokens", "completion_tokens"})."""
     response = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=0,
     )
-    return response.choices[0].message.content.strip()
+    text = response.choices[0].message.content.strip()
+    if return_usage:
+        u = response.usage
+        return text, {"prompt_tokens": u.prompt_tokens, "completion_tokens": u.completion_tokens}
+    return text
 
 
 def translate_segment(new_source, target_language, prompt_version, model, client, context=""):

@@ -18,6 +18,7 @@ from retrieve import load_translation_memory, fuzzy_retrieval
 from repair import build_repair_messages, call_repair
 from translate import build_translation_messages, call_translation
 import db
+import pricing
 
 load_dotenv(override=True)  # project .env wins over any machine-level OPENAI_MODEL
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
@@ -52,6 +53,15 @@ def get_tm():
 def get_gold():
     with open("eval/gold_set.jsonl", encoding="utf-8") as f:
         return [json.loads(l) for l in f if l.strip()]
+
+
+@st.cache_data
+def get_examples():
+    try:
+        with open("data/examples.json", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
 
 
 @st.cache_data
@@ -114,10 +124,18 @@ mode = st.radio("Mode", ["Live repair", "Evaluation explorer"], horizontal=True)
 st.divider()
 
 if mode == "Live repair":
-    input_source = st.radio("Input source", ["Type my own", "Pick from gold set"], horizontal=True)
+    input_source = st.radio("Input source", ["Type my own", "Try an example", "Pick from gold set"], horizontal=True)
 
     if input_source == "Type my own":
         source_text = st.text_area("English source", height=100)
+    elif input_source == "Try an example":
+        examples = get_examples()
+        picked_ex = st.selectbox(
+            "Example (a lightly edited game line; the app finds the approved match and repairs it)",
+            examples,
+            format_func=lambda s: (s[:70] + "...") if len(s) > 70 else s,
+        )
+        source_text = picked_ex or ""
     else:
         gold = get_gold()
         picked = st.selectbox(
@@ -152,14 +170,14 @@ if mode == "Live repair":
                 )
                 messages = build_translation_messages(query_norm, TARGET_LANGUAGE, "baseline_context", context=context)
                 t0 = time.time()
-                output = call_translation(messages, MODEL, get_client())
+                output, usage = call_translation(messages, MODEL, get_client(), return_usage=True)
                 latency_ms = int((time.time() - t0) * 1000)
             else:
                 messages = build_repair_messages(
                     query_norm, TARGET_LANGUAGE, rec["source_norm"], rec["target"], "v4_source_changes", context=context
                 )
                 t0 = time.time()
-                output = call_repair(messages, MODEL, get_client())
+                output, usage = call_repair(messages, MODEL, get_client(), return_usage=True)
                 latency_ms = int((time.time() - t0) * 1000)
                 preservation = round(Levenshtein.normalized_distance(output, rec["target"]), 3)
 
@@ -168,6 +186,7 @@ if mode == "Live repair":
                 scratch_messages = build_translation_messages(query_norm, TARGET_LANGUAGE, "baseline_scratch")
                 scratch_output = call_translation(scratch_messages, MODEL, get_client())
 
+            cost = pricing.cost_usd(MODEL, usage["prompt_tokens"], usage["completion_tokens"])
             record_id = str(uuid.uuid4())
             st.session_state.result = {
                 "record_id": record_id,
@@ -183,6 +202,9 @@ if mode == "Live repair":
                 "scratch_output": scratch_output,
                 "preservation": preservation,
                 "latency_ms": latency_ms,
+                "prompt_tokens": usage["prompt_tokens"],
+                "completion_tokens": usage["completion_tokens"],
+                "cost_usd": cost,
             }
 
             db.log_inference({
@@ -196,6 +218,11 @@ if mode == "Live repair":
                 "context": context,
                 "model": MODEL,
                 "latency_ms": latency_ms,
+                "prompt_tokens": usage["prompt_tokens"],
+                "completion_tokens": usage["completion_tokens"],
+                "cost_usd": cost,
+                "condition": "scratch_context" if used_fallback else "repair",
+                "fell_back": used_fallback,
             })
 
     result = st.session_state.result
@@ -208,8 +235,8 @@ if mode == "Live repair":
             st.markdown(f"**Output (from scratch, with context hint):** {result['output']}")
         else:
             st.caption(f"Retrieved TM match (score {result['retrieval_score']}):")
-            st.markdown(f"**Source:** {result['tm_source']}  \n**Approved target:** {result['tm_target']}")
-            st.markdown("**Repaired output** (highlighted against the approved target):")
+            st.markdown(f"**Old source:** {result['tm_source']}  \n**Approved target from TM:** {result['tm_target']}")
+            st.markdown("**LLM translation with TM access and fuzzy repair** (highlighted against the approved target):")
             st.markdown(diff_html(result["tm_target"], result["output"]), unsafe_allow_html=True)
 
         if result["context_hint"]:
@@ -218,10 +245,11 @@ if mode == "Live repair":
         if result["scratch_output"]:
             st.markdown(f"**From-scratch translation (no TM, no hint):** {result['scratch_output']}")
 
-        m1, m2, m3 = st.columns(3)
+        m1, m2, m3, m4 = st.columns(4)
         m1.metric("Retrieval score", result["retrieval_score"])
         m2.metric("Preservation", result["preservation"] if result["preservation"] is not None else "N/A")
         m3.metric("Latency", f"{result['latency_ms']} ms")
+        m4.metric("Cost", f"${result['cost_usd']:.4f}")
 
         st.divider()
         st.markdown("**Feedback**")
@@ -250,12 +278,16 @@ else:
         case_runs = runs_by_case.get(picked["case_id"], {})
         reference = picked["reference"]
         repair_row = case_runs.get("repair")
-        approved_target = picked.get("target_approved") or (repair_row["tm_target"] if repair_row else None)
 
-        st.markdown(f"**Query:** {picked['query']}")
-        st.markdown(f"**Human reference:** {reference}")
-        if approved_target:
-            st.markdown(f"**Approved TM target:** {approved_target}")
+        st.markdown("**Query (new translation):**")
+        if repair_row:
+            st.markdown(diff_html(repair_row["tm_source_norm"], picked["query"]), unsafe_allow_html=True)
+            st.markdown(f"**Found TM hit (with fuzzy score {repair_row['retrieval_score']}):**")
+            st.markdown(diff_html(picked["query"], repair_row["tm_source_norm"]), unsafe_allow_html=True)
+            st.caption(f"Approved target from TM: {repair_row['tm_target']}")
+        else:
+            st.markdown(picked["query"])
+        st.markdown(f"**Human Translator baseline:** {reference}")
 
         cols = st.columns(3)
         for col, condition in zip(cols, ["scratch", "scratch_context", "repair"]):
