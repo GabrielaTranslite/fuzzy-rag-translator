@@ -24,6 +24,8 @@ Copy `.env.example` to `.env` and fill it in. `.env` is gitignored; never commit
 | `POSTGRES_PORT` | Host port mapped to the db container | `5433` |
 | `GRAFANA_ADMIN_PASSWORD` | Grafana admin login | change before any public deploy |
 
+For a local or Docker run you only need to set `OPENAI_API_KEY`. Every other variable already has a working value in `.env.example`, so you can leave it as is. Change `POSTGRES_PASSWORD` and `GRAFANA_ADMIN_PASSWORD` before any public deploy.
+
 Note on host vs container networking. Inside Docker Compose the app and Grafana
 reach Postgres at `db:5432` (the service name), which is set for them in
 `docker-compose.yaml`. Tools you run on your own machine (the seed script, or the
@@ -31,13 +33,46 @@ app started with `streamlit run`) reach the same database at
 `localhost:${POSTGRES_PORT}`. The host port is `5433` here on purpose, to avoid a
 clash with a local Postgres that may already own `5432` (see Troubleshooting).
 
+## Python environment (venv) and packages
+
+You need this only to run something on your own machine directly: the seed script,
+the ingestion pipeline (Prefect), or the app started with `streamlit run`. If you
+use only the Docker Compose stack (Option A), you can skip this section, because
+Docker builds its own environment inside the image.
+
+A virtual environment (venv) is an isolated Python install just for this project,
+so its packages do not clash with other projects or your system Python. Create it
+once, then activate it in every new terminal before running the scripts. Requires
+Python 3.12 (check with `python --version`).
+
+Create it once, in the project folder:
+
+```
+python -m venv .venv
+```
+
+Activate it (do this in each new terminal):
+
+- Windows PowerShell: `.venv\Scripts\Activate.ps1`
+- Windows cmd: `.venv\Scripts\activate.bat`
+- macOS / Linux: `source .venv/bin/activate`
+
+When it is active your prompt shows `(.venv)`. Install the packages once per venv:
+
+```
+pip install -r requirements.txt
+```
+
+Leave the venv any time with `deactivate`. The `.venv/` folder is gitignored, so it
+is never committed.
+
 ## Option A: full stack with Docker Compose (recommended)
 
 ```bash
 cp .env.example .env          # then edit .env and set OPENAI_API_KEY
 docker compose up -d          # builds the app image; starts qdrant, db, app, grafana
 docker compose ps             # wait until db is healthy
-python scripts/seed_monitoring.py   # optional: seed the dashboard with eval data
+python scripts/seed_monitoring.py   # optional: seed the dashboard (needs the venv; see "Python environment")
 ```
 
 Services:
@@ -56,10 +91,14 @@ automatically from `grafana/provisioning/`.
 ## Option B: run the app without Docker
 
 ```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+# Create and activate the venv, then install packages
+# (see "Python environment (venv) and packages" above):
 pip install -r requirements.txt
+
 # For feedback logging you still need Postgres. Easiest: start just the db container:
 docker compose up -d db
+
+# Run the app:
 streamlit run app.py
 ```
 
@@ -136,9 +175,9 @@ docker compose up -d grafana
   schema file was in place. Recreate it cleanly:
   `docker compose down -v && docker compose up -d db` (this wipes the db volume and
   re-runs `db/init/01_schema.sql`).
-- **Grafana panels empty**: run `python scripts/seed_monitoring.py`, and use the app
-  to generate live rows. Note: cost panels stay empty until token/cost logging is
-  wired into the app (a known follow-up).
+- **Grafana panels empty**: run `python scripts/seed_monitoring.py` (needs the venv),
+  and use the app to generate live rows. The seeded rows fill retrieval score,
+  preservation, and volume; cost, latency, and feedback fill in from live app usage.
 - **App image build is slow**: the image installs the full dependency set (including
   the embedding stack used by the pipeline and eval). This is a one-time build cost.
 

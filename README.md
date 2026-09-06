@@ -17,6 +17,20 @@ literal English gloss.
 
 ---
 
+## Live demo
+
+The whole stack is deployed on a **Hostman cloud VPS** as one Docker Compose stack
+(Streamlit app + Postgres + Grafana + Qdrant).
+
+- **App:** http://212.192.2.14:8501/
+- **Monitoring dashboard** (Grafana, read-only, no login): http://212.192.2.14:3000/d/fuzzy-repair-monitoring
+
+This is a demo instance and may be taken offline after the review period. To run it
+yourself see [Quick start](#quick-start) or [SETUP.md](SETUP.md); to reproduce the
+deployment see [DEPLOY.md](DEPLOY.md).
+
+---
+
 ## Why this project exists (for readers outside games and translation)
 
 **Why translation memory and RAG.** Game localization is not generic translation.
@@ -193,6 +207,7 @@ Where each LLM Zoomcamp criterion is addressed, so reviewers can find things fas
 | Monitoring | `docker-compose.yaml` (Grafana + Postgres), `grafana/provisioning/` (9-panel dashboard), feedback captured in the app |
 | Containerization | `docker-compose.yaml` (qdrant, db, app, grafana), `Dockerfile` |
 | Reproducibility | pinned `requirements.txt`, committed data under GPL, `SETUP.md`, `db/init/01_schema.sql` |
+| Cloud deployment (bonus) | Deployed on a Hostman VPS as one Docker Compose stack, see [Live demo](#live-demo) and [DEPLOY.md](DEPLOY.md) |
 | Best practices | query rewriting via context normalization (`src/normalization.py`); semantic retriever evaluated in `eval/01`; see the note below |
 
 Best-practices note (honest scope): user-query rewriting is implemented, because
